@@ -4,10 +4,10 @@
 One line description, required for extensions repository catalog.
    * Set SHORTDESCRIPTION = %$SHORTDESCRIPTION%
 -->
+<img src="http://webdav.org/images/webdav-logo.jpg" style="float:right">
 %SHORTDESCRIPTION%
 
 %TOC%
-
 [[http://webdav.org][WebDAV]] stands for "Web-based Distributed Authoring and
 Versioning". It is a set of extensions to the HTTP protocol which allows users
 to collaboratively edit and manage files on remote web servers. 
@@ -108,12 +108,22 @@ Many thanks to the following sponsors for supporting this work:
    * [[http://Kontextwork.de][KontextWork]]
    * [[http://www.tu-berlin.de/][Technische Universität Berlin]]
 
-|  Author(s): | Crawford Currie http://c-dot.co.uk |
-|  Copyright: | &copy; 2008 !KontextWork.de, &copy; 2008-2015 Crawford Currie http://c-dot.co.uk |
-|  License: | [[http://www.gnu.org/licenses/old-licenses/gpl-2.0.html][GPL2 (Gnu General Public License v2)]] |
-|  Release: | %$RELEASE% |
-|  Version: | %$VERSION% |
-|  Change History: | <!-- versions below in reverse order -->&nbsp; |
-|  Dependencies: | %$DEPENDENCIES% |
-
 <!-- Do _not_ attempt to edit this topic; it is auto-generated. Please add comments/questions/remarks to the feedback topic on foswiki.org instead. -->
+
+%META:FORM{name="PackageForm"}%
+%META:FIELD{name="Author" attributes="" title="Author" value="Crawford Currie http://c-dot.co.uk"}%
+%META:FIELD{name="Version" attributes="" title="Version" value="2.0.1"}%
+%META:FIELD{name="Release" attributes="" title="Release" value="10 May 2015"}%
+%META:FIELD{name="Copyright" attributes="" title="Copyright" value="&copy; 2008 !KontextWork.de, &copy; 2008-2015 Crawford Currie http://c-dot.co.uk"}%
+%META:FIELD{name="License" attributes="" title="License" value="[[http://www.gnu.org/licenses/old-licenses/gpl-2.0.html][GPL2 (Gnu General Public License v2)]]"}%
+%META:FIELD{name="Home" attributes="" title="Home" value="http://foswiki.org/Extensions/WebDAVContrib"}%
+%META:FIELD{name="Support" attributes="" title="Support" value="http://foswiki.org/Support/WebDAVContrib"}%
+%META:FIELD{name="Repository" attributes="" title="Repository" value="https://github.com/foswiki/WebDAVContrib"}%
+%META:FIELD{name="ExtensionClassification" attributes="" title="ExtensionClassification" value="Data and Files, User interactivity"}%
+%META:FIELD{name="ExtensionType" attributes="" title="ExtensionType" value="PluginPackage"}%
+%META:FIELD{name="Compatibility" attributes="" title="[[Compatibility]]" value=""}%
+%META:FIELD{name="ImageUrl" attributes="" title="ImageUrl" value=""}%
+%META:FIELD{name="DemoUrl" attributes="" title="DemoUrl" value="http://"}%
+%META:FIELD{name="SupportUrl" attributes="" title="SupportUrl" value="Support.%25TOPIC%25"}%
+%META:FIELD{name="ModificationPolicy" attributes="" title="ModificationPolicy" value="CoordinateWithAuthor"}%
+%META:FIELD{name="NewsFlash" attributes="" title="NewsFlash" value=""}%
