@@ -2,7 +2,7 @@
 ---+!! !WebDAVContrib
 <!--
 One line description, required for extensions repository catalog.
-   * Set SHORTDESCRIPTION = Apache2 !WebDAV module for Foswiki
+   * Set SHORTDESCRIPTION = %$SHORTDESCRIPTION%
 -->
 %SHORTDESCRIPTION%
 
