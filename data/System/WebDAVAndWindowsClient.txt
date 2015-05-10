@@ -1,0 +1,78 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1356278806" format="1.1" version="1"}%
+%META:TOPICPARENT{name="WebDAVContrib"}%
+---+ Windows !WebDAV Clients
+
+There are four ways to access !WebDAV folders from Windows.
+Not all methods are available on all versions of Windows.
+   1 (Preferred) Use the *Add Network Place* wizard. Enter the URL of the folder e.g.
+     <pre>http://server/dav</pre>
+   1 Mount a !WebDAV folder on a drive letter from the command-line 
+     (a DOS box). <pre>
+C:\> net use * http://server/dav
+Drive Z: is now connected to <nop>http://server/dav.</pre>
+   1 Via Internet Explorer (IE 7 or earlier), by following the File->Open menu and selecting
+     "Open as Web Folder". Enter the URL of the folder e.g.
+     <pre>http://server/dav </pre>
+   1 Directly from an application, such as Microsoft Office. Type the full URL
+     path to the document e.g.
+     <pre>http://server/dav/System/AccessControl.txt</pre>
+Some of the
+above methods may not work on some versions of Windows, or when using SSL,
+or with some types of authentication. These problems are not unique
+to this !WebDAV implementation; the bugs are in the clients, not the server.
+
+   * For example, using !WindowsXP service pack 2, "Open as web folder" results in a standard windows share style authentication dialog which fails (doesn't even send a request to the DAV server), and then when you hit cancel, a different login dialog pops up - entering your Foswiki username and password here _works_
+
+See http://greenbytes.de/tech/webdav/webdav-redirector-list.html and
+http://greenbytes.de/tech/webdav/webfolder-client-list.htmlfor a list
+list of the known bugs in different Windows versions. 
+
+Depending on what version of Windows you are running - and how you access your
+files - then there may be up to four different implementations of DAV used. Due
+to the wide range of Microsoft platforms, it has not been possible to test all
+of these implementations, and all those tested have known bugs. In general,
+Windows XP and later attempt to connect
+using a component called the _WebDAV Mini-Redirector_, except for when files
+are accessed from Microsoft office in which case the
+_Microsoft Data Access Internet Publishing Provider DAV_ is used.
+When reporting problems it is critical that you identify which of these methods
+is being used to access !WebDAV, by running the server with [[WebDAVContrib#Debugging][full tracing]] enabled.
+
+---++++ Problems with authentication
+
+By default the !WebDAV Mini-Redirector will not talk to Basic authentication. This is
+because Basic Authentication is very insecure over a plain connection. If your
+server uses SSL, or you are behind a corporate firewall, you may consider it
+safe to enable it by following the instructions at
+http://support.microsoft.com/kb/841215
+
+Windows caches authentication aggressively. This is usually not a problem
+unless you try and change authentication method, in which case rebooting
+Windows usually works, though you may have to explicitly clear your caches as
+well.
+
+If a single folder is mounted on a server using DAV, the !WebDAV Mini-Redirector
+assumes that the root folder on the same server is also mounted using DAV, and
+will try to apply the same cached authentication to all sub-folders; so having
+two sub-folders on the same server with different authentication schemes won't
+work. This applies to all folders mounted via !WebDAV from a single server.
+
+If you want to use Digest authentication, you will have to log in with an NTLM
+domain name (e.g. =CORPORATE\myname=). The NTLM domain string is required in
+the server password file (so Foswiki user =myname= needs to be in the digest
+file as =CORPORATE\myname=).
+
+---++++ Problems with Microsoft Office
+
+After opening a !WebDAV document in Office, you may see the message "Contacting
+the server for information. Press ESC to cancel." in the application status
+line. Office does not attempt to open any connections to the !WebDAV server
+after an initial PROPFIND. Clicking ESC results in the message "Downloading
+..." which again does not open any connections. Eventually after some minutes
+the application may display the document, with no further communication to the
+!WebDAV server. Research on Google suggests that this is a bug with the printer
+driver in Office.
+
+If the server does not support authentication, or if there have been other problems
+with communication, the Office will open documents in "read-only" mode.
+

@@ -1,0 +1,53 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1356278806" format="1.1" version="1"}%
+%META:TOPICPARENT{name="WebDAVContrib"}%
+---+ Configuring !WebDAVContrib with HTTP::Daemon
+
+Using HTTP::Daemon is the simplest way to get a lightweight !WebDAV server
+up and running quickly. It lacks most of the features of more sophisticated
+web servers, such as SSL support and complex authentication schemes, which
+restricts it to use behind firewalls.
+
+The server is implemented in a script in =tools/http_daemon.pl=
+
+<verbatim>
+Usage: http_daemon.pl [options]
+
+Options:
+   -fs FS or --filesystem FS
+      set filesystem to Filesys::Virtual::FS (e.g. PlainPlusAttrs)
+      default is Foswiki
+   -r R or --root R
+      set root filesystem path to R (required, for PlainPlusAttrs only)
+   -t N or --trace N
+      set tracing to N
+   -ar R or --authrealm R
+      set authrealm to R (default is Foswiki)
+</verbatim>
+The script is run by cd'ing to the tools directory and:
+<verbatim>
+$ perl http_daemon.pl http://server:80/root
+</verbatim>
+
+The parameter specifies the url we are serving, so this server will respond
+to URLs starting with =http://server/root/=, where =/root= is a URL path that will
+be used to access Foswiki data. For example, to access the text of this topic
+you would use =http://server/root/%WEB%/%TOPIC%.txt=.
+
+If you use a different filesystem - for example, the =PlainPlusAttrs= filesystem
+which can be used to export simple directory structures - then you may need
+to use the =--root= option to tell the script where the root of the
+filesystem is. For example,
+<verbatim>
+$ perl http_daemon.pl http://server:8080/ --filesystem PlainPlusAttrs --root /home/user/webdav
+</verbatim>
+will export the files in =/home/user/webdav= under the URL
+=http://server:8080/=
+
+Error messages are output to standard error (the console).
+If you are having problems with !WebDAV you can enable tracing using the
+=--trace= option. See WebDAVContrib#Debugging for more information.
+
+Note that the only authentication scheme supported by this server is Basic Auth,
+which means passwords are sent in plain text. The filesystem is expected
+to provide authentication support. Note that =PlainPlusAttrs= does not
+support any form of authentication.

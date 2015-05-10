@@ -1,0 +1,43 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1356278806" format="1.1" version="1"}%
+%META:TOPICPARENT{name="WebDAVContrib"}%
+---+ Running the Litmus Suite with !WebDAVContrib
+
+All the standard [[http://www.webdav.org/neon/litmus/][Litmus tests]] for
+a class 2 !WebDAV server pass. WebDAVContribLitmusTests describes how to
+run them.
+
+To run the litmus tests on an Apache server, download the source from the
+site given above and install. Change the Apache directives thus:
+<verbatim>
+    # Use the homogenous filesystem API for litmus testing
+    FoswikiFilesysHandler Filesys::Virtual::PlainPlusAttrs
+    # Set the filesystem root path that will be visible through WebDAV as /
+    FoswikiFilesysDebugRoot /tmp
+</verbatim>
+The Litmus tests have to run with the =Filesys::Virtual::PlainPlusAttrs=
+filesystem handler due to the heterogenous way that Foswiki
+handles web, topic and attachment resources (Web<nop>DAV assumes only two
+resource types, collections and files, and the litmus tests reflect this).
+
+Running on other server types is usually a matter of changing the parameters
+to the invocation script. For example, for =lighttpd= the configuration will look something like this:
+<verbatim>
+$HTTP["url"] =~ "^/litmus" {
+ alias.url += ( "/litmus" => "/var/www/foswiki/tools/webdav.fcgi" )
+ fastcgi.server = ( ".fcgi" => (
+   (
+     "socket"    => "/var/www/foswiki/working/tmp/webdav.sock",
+     "bin-path"  => "/var/www/foswiki/tools/webdav.fcgi -fs PlainPlusAttrs -r /tmp http://server:8080/litmus",
+     "max-procs" => 1
+   ),
+  )
+ )
+}
+</verbatim>
+
+and for HTTP::Daemon, the server start would look like this:
+<verbatim>
+http_daemon.pl http://server:8080/ --filesystem PlainPlusAttrs --root /tmp
+</verbatim>
+
+You can now run the litmus tests as described in the litmus documentation.

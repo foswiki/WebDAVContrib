@@ -1,0 +1,216 @@
+2013-10-02 15:38:21: (log.c.166) server started 
+2013-10-02 15:42:27: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 15:42:27: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 15:42:30: (log.c.166) server started 
+2013-10-02 16:12:28: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 16:12:28: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 16:12:30: (log.c.166) server started 
+2013-10-02 16:12:30: (mod_fastcgi.c.1104) the fastcgi-backend /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi failed to start: 
+2013-10-02 16:12:30: (mod_fastcgi.c.1108) child exited with status 13 /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi 
+2013-10-02 16:12:30: (mod_fastcgi.c.1111) If you're trying to run your app as a FastCGI backend, make sure you're using the FastCGI-enabled version.
+If this is PHP on Gentoo, add 'fastcgi' to the USE flags. 
+2013-10-02 16:12:30: (mod_fastcgi.c.1399) [ERROR]: spawning fcgi failed. 
+2013-10-02 16:12:30: (server.c.938) Configuration of plugins failed. Going down. 
+2013-10-02 16:13:42: (log.c.166) server started 
+2013-10-02 16:13:42: (mod_fastcgi.c.1104) the fastcgi-backend /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi failed to start: 
+2013-10-02 16:13:42: (mod_fastcgi.c.1108) child exited with status 13 /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi 
+2013-10-02 16:13:42: (mod_fastcgi.c.1111) If you're trying to run your app as a FastCGI backend, make sure you're using the FastCGI-enabled version.
+If this is PHP on Gentoo, add 'fastcgi' to the USE flags. 
+2013-10-02 16:13:42: (mod_fastcgi.c.1399) [ERROR]: spawning fcgi failed. 
+2013-10-02 16:13:42: (server.c.938) Configuration of plugins failed. Going down. 
+2013-10-02 16:16:47: (log.c.166) server started 
+2013-10-02 16:16:47: (mod_fastcgi.c.1104) the fastcgi-backend /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi failed to start: 
+2013-10-02 16:16:47: (mod_fastcgi.c.1108) child exited with status 13 /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi 
+2013-10-02 16:16:47: (mod_fastcgi.c.1111) If you're trying to run your app as a FastCGI backend, make sure you're using the FastCGI-enabled version.
+If this is PHP on Gentoo, add 'fastcgi' to the USE flags. 
+2013-10-02 16:16:47: (mod_fastcgi.c.1399) [ERROR]: spawning fcgi failed. 
+2013-10-02 16:16:47: (server.c.938) Configuration of plugins failed. Going down. 
+2013-10-02 16:19:29: (log.c.166) server started 
+2013-10-02 16:19:29: (mod_fastcgi.c.1104) the fastcgi-backend /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi failed to start: 
+2013-10-02 16:19:29: (mod_fastcgi.c.1108) child exited with status 13 /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi 
+2013-10-02 16:19:29: (mod_fastcgi.c.1111) If you're trying to run your app as a FastCGI backend, make sure you're using the FastCGI-enabled version.
+If this is PHP on Gentoo, add 'fastcgi' to the USE flags. 
+2013-10-02 16:19:29: (mod_fastcgi.c.1399) [ERROR]: spawning fcgi failed. 
+2013-10-02 16:19:29: (server.c.938) Configuration of plugins failed. Going down. 
+2013-10-02 16:21:21: (log.c.166) server started 
+2013-10-02 16:21:21: (server.c.961) WARNING: unknown config-key: alias.url (ignored) 
+2013-10-02 16:25:20: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 16:25:20: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 16:25:22: (log.c.166) server started 
+2013-10-02 16:25:22: (server.c.961) WARNING: unknown config-key: alias.url (ignored) 
+2013-10-02 16:28:25: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 16:28:25: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 16:28:34: (log.c.166) server started 
+2013-10-02 16:28:38: (mod_fastcgi.c.2701) FastCGI-stderr: REQ 0
+ 
+2013-10-02 16:31:51: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 16:31:51: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 16:31:52: (log.c.166) server started 
+2013-10-02 16:32:29: (mod_fastcgi.c.2701) FastCGI-stderr: Can't call method "as_string" without a package or object reference at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 13.
+ 
+2013-10-02 16:32:29: (mod_fastcgi.c.1734) connect failed: Connection refused on unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 
+2013-10-02 16:32:29: (mod_fastcgi.c.3027) backend died; we'll disable it for 1 seconds and send the request to another backend instead: reconnects: 0 load: 1 
+2013-10-02 16:32:29: (mod_fastcgi.c.2701) FastCGI-stderr: Can't call method "as_string" without a package or object reference at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 13.
+ 
+2013-10-02 16:32:54: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 16:32:54: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 16:32:54: (log.c.166) server started 
+2013-10-02 16:33:04: (mod_fastcgi.c.2701) FastCGI-stderr: Can't locate object method "as_string" via package "FCGI" at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 13.
+ 
+2013-10-02 16:33:04: (mod_fastcgi.c.2568) unexpected end-of-file (perhaps the fastcgi process died): pid: 5693 socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 
+2013-10-02 16:33:04: (mod_fastcgi.c.3309) child exited, pid: 5693 status: 107 
+2013-10-02 16:33:04: (mod_fastcgi.c.3356) response not received, request sent: 973 on socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 for /dav?, closing connection 
+2013-10-02 16:36:53: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 16:36:53: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 16:59:10: (log.c.166) server started 
+2013-10-02 16:59:34: (mod_fastcgi.c.1734) connect failed: Connection refused on unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 
+2013-10-02 16:59:34: (mod_fastcgi.c.3027) backend died; we'll disable it for 1 seconds and send the request to another backend instead: reconnects: 0 load: 1 
+2013-10-02 17:00:36: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:00:36: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:00:36: (log.c.166) server started 
+2013-10-02 17:06:51: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:06:51: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:06:52: (log.c.166) server started 
+2013-10-02 17:06:52: (mod_fastcgi.c.1104) the fastcgi-backend /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi failed to start: 
+2013-10-02 17:06:52: (mod_fastcgi.c.1108) child exited with status 255 /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi 
+2013-10-02 17:06:52: (mod_fastcgi.c.1111) If you're trying to run your app as a FastCGI backend, make sure you're using the FastCGI-enabled version.
+If this is PHP on Gentoo, add 'fastcgi' to the USE flags. 
+2013-10-02 17:06:52: (mod_fastcgi.c.1399) [ERROR]: spawning fcgi failed. 
+2013-10-02 17:06:52: (server.c.938) Configuration of plugins failed. Going down. 
+2013-10-02 17:07:10: (log.c.166) server started 
+2013-10-02 17:07:22: (mod_fastcgi.c.2701) FastCGI-stderr: Can't locate object method "new" via package "CGI::Simple" (perhaps you forgot to load "CGI::Simple"?) at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 10.
+ 
+2013-10-02 17:08:15: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:08:15: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:08:16: (log.c.166) server started 
+2013-10-02 17:09:24: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:09:24: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:09:25: (log.c.166) server started 
+2013-10-02 17:10:04: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:10:04: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:10:04: (log.c.166) server started 
+2013-10-02 17:20:10: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:20:10: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:20:12: (log.c.166) server started 
+2013-10-02 17:20:15: (mod_fastcgi.c.2701) FastCGI-stderr: Got request SCRIPT_NAME PATH_INFO HTTP_ACCEPT REQUEST_METHOD SCRIPT_FILENAME SERVER_SOFTWARE HTTP_USER_AGENT QUERY_STRING REMOTE_PORT FCGI_ROLE GATEWAY_INTERFACE DOCUMENT_ROOT SERVER_NAME SERVER_PORT REDIRECT_STATUS REMOTE_ADDR SERVER_PROTOCOL REQUEST_URI SERVER_ADDR HTTP_HOST
+ 
+2013-10-02 17:24:14: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:24:14: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:24:15: (log.c.166) server started 
+2013-10-02 17:24:19: (mod_fastcgi.c.2701) FastCGI-stderr: Got request SCRIPT_NAME PATH_INFO HTTP_ACCEPT REQUEST_METHOD SCRIPT_FILENAME SERVER_SOFTWARE HTTP_USER_AGENT QUERY_STRING REMOTE_PORT FCGI_ROLE GATEWAY_INTERFACE DOCUMENT_ROOT SERVER_NAME SERVER_PORT REDIRECT_STATUS REMOTE_ADDR SERVER_PROTOCOL REQUEST_URI SERVER_ADDR HTTP_HOST
+GET /dav
+Accept: */*
+Host: daphne:8080
+User-Agent: curl/7.27.0
+
+ 
+2013-10-02 17:24:46: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:24:46: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:24:50: (log.c.166) server started 
+2013-10-02 17:24:54: (mod_fastcgi.c.2701) FastCGI-stderr: OPTIONS /dav/
+Connection: TE, Keep-Alive
+Host: daphne:8080
+TE: trailers
+User-Agent: cadaver/0.23.3 neon/0.29.6
+
+ 
+2013-10-02 17:24:54: (mod_fastcgi.c.2701) FastCGI-stderr: PROPFIND /dav/
+Connection: TE
+Host: daphne:8080
+TE: trailers
+User-Agent: cadaver/0.23.3 neon/0.29.6
+Content-Length: 288
+Content-Type: application/xml
+DEPTH: 0
+
+ 
+2013-10-02 17:25:44: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:25:44: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:47:55: (log.c.166) server started 
+2013-10-02 17:48:08: (mod_fastcgi.c.1734) connect failed: Connection refused on unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 
+2013-10-02 17:48:08: (mod_fastcgi.c.3027) backend died; we'll disable it for 1 seconds and send the request to another backend instead: reconnects: 0 load: 1 
+2013-10-02 17:48:08: (mod_fastcgi.c.2568) unexpected end-of-file (perhaps the fastcgi process died): pid: 4653 socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 
+2013-10-02 17:48:08: (mod_fastcgi.c.3356) response not received, request sent: 603 on socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 for /dav?, closing connection 
+2013-10-02 17:49:29: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:49:29: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:49:31: (log.c.166) server started 
+2013-10-02 17:49:31: (mod_fastcgi.c.1104) the fastcgi-backend /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi failed to start: 
+2013-10-02 17:49:31: (mod_fastcgi.c.1108) child exited with status 2 /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi 
+2013-10-02 17:49:31: (mod_fastcgi.c.1111) If you're trying to run your app as a FastCGI backend, make sure you're using the FastCGI-enabled version.
+If this is PHP on Gentoo, add 'fastcgi' to the USE flags. 
+2013-10-02 17:49:31: (mod_fastcgi.c.1399) [ERROR]: spawning fcgi failed. 
+2013-10-02 17:49:31: (server.c.938) Configuration of plugins failed. Going down. 
+2013-10-02 17:49:45: (log.c.166) server started 
+2013-10-02 17:49:45: (mod_fastcgi.c.1104) the fastcgi-backend /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi failed to start: 
+2013-10-02 17:49:45: (mod_fastcgi.c.1108) child exited with status 2 /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi 
+2013-10-02 17:49:45: (mod_fastcgi.c.1111) If you're trying to run your app as a FastCGI backend, make sure you're using the FastCGI-enabled version.
+If this is PHP on Gentoo, add 'fastcgi' to the USE flags. 
+2013-10-02 17:49:45: (mod_fastcgi.c.1399) [ERROR]: spawning fcgi failed. 
+2013-10-02 17:49:45: (server.c.938) Configuration of plugins failed. Going down. 
+2013-10-02 17:50:57: (log.c.166) server started 
+2013-10-02 17:50:57: (mod_fastcgi.c.1104) the fastcgi-backend /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi failed to start: 
+2013-10-02 17:50:57: (mod_fastcgi.c.1108) child exited with status 2 /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi 
+2013-10-02 17:50:57: (mod_fastcgi.c.1111) If you're trying to run your app as a FastCGI backend, make sure you're using the FastCGI-enabled version.
+If this is PHP on Gentoo, add 'fastcgi' to the USE flags. 
+2013-10-02 17:50:57: (mod_fastcgi.c.1399) [ERROR]: spawning fcgi failed. 
+2013-10-02 17:50:57: (server.c.938) Configuration of plugins failed. Going down. 
+2013-10-02 17:51:41: (log.c.166) server started 
+2013-10-02 17:51:41: (mod_fastcgi.c.1104) the fastcgi-backend /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi failed to start: 
+2013-10-02 17:51:41: (mod_fastcgi.c.1108) child exited with status 2 /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi 
+2013-10-02 17:51:41: (mod_fastcgi.c.1111) If you're trying to run your app as a FastCGI backend, make sure you're using the FastCGI-enabled version.
+If this is PHP on Gentoo, add 'fastcgi' to the USE flags. 
+2013-10-02 17:51:41: (mod_fastcgi.c.1399) [ERROR]: spawning fcgi failed. 
+2013-10-02 17:51:41: (server.c.938) Configuration of plugins failed. Going down. 
+2013-10-02 17:57:05: (log.c.166) server started 
+2013-10-02 17:57:37: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:57:37: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:57:39: (log.c.166) server started 
+2013-10-02 17:58:20: (mod_fastcgi.c.2701) FastCGI-stderr: The rest of it: 
+Can't locate object method "new" via package "HTTP::Response" at /home/foswiki/trunk/core/bin/webdav.fcgi line 60.
+ 
+2013-10-02 17:58:20: (mod_fastcgi.c.2568) unexpected end-of-file (perhaps the fastcgi process died): pid: 3108 socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 
+2013-10-02 17:58:20: (mod_fastcgi.c.3356) response not received, request sent: 964 on socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 for /dav?, closing connection 
+2013-10-02 17:58:48: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:58:48: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:58:51: (log.c.166) server started 
+2013-10-02 17:58:58: (mod_fastcgi.c.2701) FastCGI-stderr: The rest of it: 
+Can't locate object method "new" via package "HTTP::Response" at /home/foswiki/trunk/core/bin/webdav.fcgi line 58.
+ 
+2013-10-02 17:58:58: (mod_fastcgi.c.2568) unexpected end-of-file (perhaps the fastcgi process died): pid: 18644 socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 
+2013-10-02 17:58:58: (mod_fastcgi.c.3356) response not received, request sent: 964 on socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 for /dav?, closing connection 
+2013-10-02 17:59:38: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 17:59:38: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 17:59:39: (log.c.166) server started 
+2013-10-02 17:59:45: (mod_fastcgi.c.2701) FastCGI-stderr: The rest of it: 
+Can't locate object method "handleRequest" via package "Daemon" at /home/foswiki/trunk/core/bin/webdav.fcgi line 60.
+ 
+2013-10-02 17:59:45: (mod_fastcgi.c.2568) unexpected end-of-file (perhaps the fastcgi process died): pid: 29182 socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 
+2013-10-02 17:59:45: (mod_fastcgi.c.3356) response not received, request sent: 964 on socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 for /dav?, closing connection 
+2013-10-02 18:00:44: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 18:00:44: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 18:00:49: (log.c.166) server started 
+2013-10-02 18:00:52: (mod_fastcgi.c.1734) connect failed: Connection refused on unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 
+2013-10-02 18:00:52: (mod_fastcgi.c.3027) backend died; we'll disable it for 1 seconds and send the request to another backend instead: reconnects: 0 load: 1 
+2013-10-02 18:00:52: (mod_fastcgi.c.2568) unexpected end-of-file (perhaps the fastcgi process died): pid: 12425 socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 
+2013-10-02 18:00:52: (mod_fastcgi.c.3309) child exited, pid: 12425 status: 255 
+2013-10-02 18:00:52: (mod_fastcgi.c.3356) response not received, request sent: 594 on socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 for /dav?, closing connection 
+2013-10-02 18:02:36: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 18:02:36: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 18:02:39: (log.c.166) server started 
+2013-10-02 18:03:32: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 18:03:32: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 18:03:33: (log.c.166) server started 
+2013-10-02 18:03:45: (mod_fastcgi.c.2701) FastCGI-stderr: The rest of it: 
+Null filename used at (eval 110) line 2.
+ 
+2013-10-02 18:03:46: (mod_fastcgi.c.2568) unexpected end-of-file (perhaps the fastcgi process died): pid: 15656 socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 
+2013-10-02 18:03:46: (mod_fastcgi.c.3356) response not received, request sent: 964 on socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 for /dav?, closing connection 
+2013-10-02 18:04:06: (server.c.1396) [note] graceful shutdown started 
+2013-10-02 18:04:06: (server.c.1512) server stopped by UID = 0 PID = 0 
+2013-10-02 18:04:22: (log.c.166) server started 
+2013-10-02 18:04:27: (mod_fastcgi.c.2701) FastCGI-stderr: The rest of it: 
+Null filename used at (eval 110) line 2.
+ 
+2013-10-02 18:04:27: (mod_fastcgi.c.2568) unexpected end-of-file (perhaps the fastcgi process died): pid: 26130 socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 
+2013-10-02 18:04:27: (mod_fastcgi.c.3356) response not received, request sent: 964 on socket: unix:/home/foswiki/trunk/WebDAVContrib/test/webdav.sock-2 for /dav?, closing connection 
+2013-10-02 18:12:19: (server.c.1512) server stopped by UID = 0 PID = 29388 

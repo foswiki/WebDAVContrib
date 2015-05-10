@@ -1,0 +1,178 @@
+%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1392324741" format="1.1" reprev="2" version="2"}%
+%META:TOPICPARENT{name="WebDAVContrib"}%
+
+---+ Configuring !WebDAVContrib with FCGI
+
+%TOC%
+
+FCGI is a standard extension protocol understood by all major web server
+implementations (for example, Lighttpd, Nginx, Apache and IIS all support it).
+
+The !WebDAVContrib distribution includes a FCGI server script,
+in =tools/webdav.fcgi= (or =virtualhosts-webdav.fcgi if you are using =VirtualHostingContrib), which can
+be used with any web server that supports FCGI. The following examples
+show it being used with Lighttpd, Nginx and Apache. Note that these
+are generic examples, and will require customisation for your site.
+
+Note that the default configuration of the WebDAV FCGI module uses
+!BasicAuth to obtain authentication information about the user. For
+this reason it is important that you configure your !WebDAV service
+to use SSL. However configuration of SSL is beyond the scope of this guide.
+
+Let's say we have Foswiki installed in =/var/www/foswiki= and we want to start a =lighttpd= server on port 80, and have our Foswiki content server under the URL =http://server/dav= (thus =http://server/dav/%WEB%/%TOPIC%.txt= would be the URL to access this topic).
+
+---++ Lighttpd
+
+A suitable =lighttpd= configuration file might be as follows:
+
+<verbatim>
+# Configuration for lighttpd & factcgi based webdav server.
+server.document-root = "/tmp"
+server.modules = (
+   "mod_cgi",
+   "mod_fastcgi",
+   "mod_accesslog",
+   "mod_alias"
+)
+server.port = 80
+
+# ipv6 support
+$SERVER["socket"] == "[::]:80" { }
+server.errorlog = "/var/www/foswiki/working/logs/lighttpd_error.log"
+accesslog.filename = "/var/www/foswiki/working/logs/lighttpd_access.log"
+
+# mimetype mapping
+include_shell "/usr/share/lighttpd/create-mime.assign.pl"
+
+$HTTP["url"] =~ "^/dav" {
+  alias.url += ( "/dav" => "/var/www/foswiki/tools/webdav.fcgi" )
+  fastcgi.server = (
+    ".fcgi" => (
+      (
+        "socket"    => "/var/www/foswiki/working/tmp/webdav.sock",
+        "bin-path"  => "/var/www/foswiki/tools/webdav.fcgi http://server:80/dav"
+      ),
+    )
+  )
+}
+</verbatim>
+
+The =alias.url= remaps all =/dav= URLs to the =webdav.fcgi= server script.
+
+The =bin-path= provides all the options to the =webdav.fcgi= script. A full list of available options can be found by running =./webdav.fcgi --help= in the =tools/= directory.
+
+See http://redmine.lighttpd.net/projects/1/wiki/Docs_ModFastCGI for more information
+on configuring =lighttpd= and =mod_fastcgi=.
+
+Once you have this configuration file you can run =lighttpd= as follows:
+
+<verbatim>
+lighttpd -f <path to config file>
+</verbatim>
+
+If you intend to use the =lighttpd= web server with Foswiki you are highly recommended
+to read about the [[http://foswiki.org/Extensions/FastCGIEngineContrib][FastCGIEngineContrib]].
+
+If you use a different filesystem - for example, the =PlainPlusAttrs= filesystem
+which can be used to export simple directory structures - then you may need
+to use the =--root= option to tell the script where the root of the
+filesystem is.
+
+If you are having problems with !WebDAV you can enable tracing using the
+=--trace= option. See WebDAVContrib#Debugging for more information.
+
+---++ Nginx
+
+In contrast to most other web servers nginx is a proxying server
+which delegates the real work to backend worker processes, accessing
+them using a dedicated socket or IP address. In that sense it
+does not manage the life-cycle of a backend process the same way
+lighttpd or Apache do. 
+
+To use =webdav.fcgi= using nginx, we first have to start the backend
+process on its own. From the commandline, we can simply:
+
+<verbatim>
+cd /var/www/foswiki/tools
+./webdav.fcgi --listen 127.0.0.1:9001
+</verbatim>
+
+This will start a daemon on port 9001, which will spawn 5 worker processes,
+managed by an =FCGI::ProcManager= implementation for !WebDAVContrib.
+
+(A full list of available options can be found by running =./webdav.fcgi --help= in the =tools/= directory.)
+
+Of course this daemon will not survive
+a server restart, so you will need to install a system-wide init script into
+the operating system's start-up sequence. There's an appropriate example
+script (written for Debian Linux) in =tools/foswiki-dav.init-script=. You
+can copy this script to =/etc/init.d/foswiki-dav=. You will also need to
+create a file under =/etc/defaults/foswiki-dav= to hold the custom settings
+for your system:
+
+<verbatim>
+# root directory where your foswiki is installed
+FOSWIKI_ROOT=/var/www/foswiki
+
+# script to be run, must be located in $FOSWIKI_ROOT/tools/wedav.fcgi
+FOSWIKI_FCGI=webdav.fcgi
+
+# port that the webdav.fcgi process will be listening on.
+FOSWIKI_BIND=127.0.0.1:9001
+
+# number of workers to be spawned
+FOSWIKI_CHILDREN=5
+</verbatim>
+
+Make sure the =webdav.fcgi= process is started properly using =service foswiki-dav start= and =service foswiki-dav status=.
+
+Next, we have to configure nginx to contact the =webdav.fcgi= process on the configured port:
+
+<verbatim>
+...
+server {
+  server_name ~^(www\.)?(?<domain>.+)$;
+
+  set $foswiki_root /var/www/foswiki;
+
+  ...
+
+  location /dav {
+     gzip off;
+
+     # must match FOSWIKI_BIND in /etc/defaults/foswiki-dav
+     fastcgi_pass   127.0.0.1:9001;
+
+     fastcgi_split_path_info ^/dav/(.+?)(/.*)$;
+     fastcgi_param  SCRIPT_FILENAME  $foswiki_root/tools/webdav.fcgi;
+     fastcgi_param  PATH_INFO $fastcgi_path_info;
+
+     include fastcgi_params;
+  }
+
+  ...
+}
+</verbatim>
+
+See http://foswiki.org/Support/FoswikiOnNginx for a full description on how to install Foswiki under nginx.
+
+---++ Apache
+
+Installation with Apache =mod_fcgid= is quite straightforward; all
+that is required is to expose the =tools/webdav.fcgi= script through
+the Apache configuration. 
+
+<verbatim>
+ScriptAlias "/dav/" "/var/www/foswiki/tools/webdav.fcgi"
+
+# FCGI must pass authorization header to script
+FcgidPassHeader AUTHORIZATION
+# Set options for server script. A full list of available options can be
+# found by running =./webdav.fcgi --help= in the =tools/= directory.
+FcgidInitialEnv WEBDAV_FCGI_OPTIONS "--apache --location /dav http://server:80/dav"
+
+<Files /var/www/foswiki/tools/webdav.fcgi>
+   SetHandler fcgid-script
+   Options +ExecCGI
+</Files>
+</verbatim>

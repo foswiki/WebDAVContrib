@@ -1,0 +1,65 @@
+Firing up server
+Firing up server
+Firing up server
+Firing up server
+Firing up server
+Firing up server
+Firing up server
+Firing up server
+Firing up server
+Firing up server
+Firing up server
+Firing up server
+Firing up server
+Firing up server
+Global symbol "$s" requires explicit package name at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 13.
+Global symbol "$s" requires explicit package name at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 14.
+Execution of /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi aborted due to compilation errors.
+Can't locate HTTP/WebDAV.pm in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl .) at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+BEGIN failed--compilation aborted at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+Can't locate HTTP/WebDAV.pm in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl .) at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+BEGIN failed--compilation aborted at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+Can't locate HTTP/WebDAV.pm in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl .) at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+BEGIN failed--compilation aborted at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+Can't locate HTTP/WebDAV.pm in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl .) at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+BEGIN failed--compilation aborted at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+Can't locate HTTP/WebDAV.pm in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl .) at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+BEGIN failed--compilation aborted at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+Can't locate HTTP/WebDAV.pm in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl .) at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+BEGIN failed--compilation aborted at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+Can't locate HTTP/WebDAV.pm in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl .) at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+BEGIN failed--compilation aborted at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+Can't locate HTTP/WebDAV.pm in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl .) at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+BEGIN failed--compilation aborted at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 8.
+/home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi
+Can't locate /home/foswiki/trunk/WebDAVContrib/bin//../bin/setlib.cfg in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl .) at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 15.
+BEGIN failed--compilation aborted at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 16.
+/home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi
+Can't locate /home/foswiki/trunk/WebDAVContrib/bin//../bin/setlib.cfg in @INC (@INC contains: /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl .) at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 15.
+BEGIN failed--compilation aborted at /home/foswiki/trunk/WebDAVContrib/bin/webdav.fcgi line 16.
+/home/foswiki/trunk/core/bin/webdav.fcgi
+/home/foswiki/trunk/core/bin/webdav.fcgi
+/home/foswiki/trunk/core/bin/webdav.fcgi
+syntax error at /home/foswiki/trunk/core/bin/webdav.fcgi line 83, near ")"
+Execution of /home/foswiki/trunk/core/bin/webdav.fcgi aborted due to compilation errors.
+syntax error at /home/foswiki/trunk/core/bin/webdav.fcgi line 83, near ")"
+Execution of /home/foswiki/trunk/core/bin/webdav.fcgi aborted due to compilation errors.
+syntax error at /home/foswiki/trunk/core/bin/webdav.fcgi line 83, near ")"
+Execution of /home/foswiki/trunk/core/bin/webdav.fcgi aborted due to compilation errors.
+/home/foswiki/trunk/core/bin/webdav.fcgi
+/home/foswiki/trunk/core/bin/webdav.fcgi
+/home/foswiki/trunk/core/bin/webdav.fcgi
+/home/foswiki/trunk/core/lib /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl . /home/foswiki/trunk/core/lib/CPAN/lib/arch /home/foswiki/trunk/core/lib/CPAN/lib/5.14.2/i686-linux-gnu-thread-multi-64int /home/foswiki/trunk/core/lib/CPAN/lib/5.14.2 /home/foswiki/trunk/core/lib/CPAN/lib/home/foswiki/trunk/core/lib /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl . /home/foswiki/trunk/core/lib/CPAN/lib/arch /home/foswiki/trunk/core/lib/CPAN/lib/5.14.2/i686-linux-gnu-thread-multi-64int /home/foswiki/trunk/core/lib/CPAN/lib/5.14.2 /home/foswiki/trunk/core/lib/CPAN/lib/home/foswiki/trunk/core/lib /etc/perl /usr/local/lib/perl/5.14.2 /usr/local/share/perl/5.14.2 /usr/lib/perl5 /usr/share/perl5 /usr/lib/perl/5.14 /usr/share/perl/5.14 /usr/local/lib/site_perl . /home/foswiki/trunk/core/lib/CPAN/lib/arch /home/foswiki/trunk/core/lib/CPAN/lib/5.14.2/i686-linux-gnu-thread-multi-64int /home/foswiki/trunk/core/lib/CPAN/lib/5.14.2 /home/foswiki/trunk/core/lib/CPAN/libCan't locate object method "new" via package "Daemon" at /home/foswiki/trunk/core/bin/webdav.fcgi line 21.
+Can't locate object method "new" via package "Daemon" at /home/foswiki/trunk/core/bin/webdav.fcgi line 21.
+Can't locate object method "new" via package "Daemon" at /home/foswiki/trunk/core/bin/webdav.fcgi line 21.
+Can't locate object method "new" via package "Daemon" at /home/foswiki/trunk/core/bin/webdav.fcgi line 21.
+Can't locate object method "new" via package "Daemon" at /home/foswiki/trunk/core/bin/webdav.fcgi line 21.
+Global symbol "$request" requires explicit package name at /home/foswiki/trunk/core/bin/webdav.fcgi line 55.
+Global symbol "$request" requires explicit package name at /home/foswiki/trunk/core/bin/webdav.fcgi line 55.
+Execution of /home/foswiki/trunk/core/bin/webdav.fcgi aborted due to compilation errors.
+Global symbol "$request" requires explicit package name at /home/foswiki/trunk/core/bin/webdav.fcgi line 55.
+Global symbol "$request" requires explicit package name at /home/foswiki/trunk/core/bin/webdav.fcgi line 55.
+Execution of /home/foswiki/trunk/core/bin/webdav.fcgi aborted due to compilation errors.
+Global symbol "$request" requires explicit package name at /home/foswiki/trunk/core/bin/webdav.fcgi line 55.
+Global symbol "$request" requires explicit package name at /home/foswiki/trunk/core/bin/webdav.fcgi line 55.
+Execution of /home/foswiki/trunk/core/bin/webdav.fcgi aborted due to compilation errors.

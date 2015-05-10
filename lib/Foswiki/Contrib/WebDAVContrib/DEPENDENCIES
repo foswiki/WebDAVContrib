@@ -1,0 +1,26 @@
+#
+# Common requirements
+Data::Dumper,>=0,cpan,Required
+Encode,>=0,cpan,Required
+File::Find::Rule::Filesys::Virtual,>=0,cpan,Required
+File::Spec,>=0,cpan,Required, standard perl module
+Foswiki::Plugins::FilesysVirtualPlugin,>=1,perl,Required
+POSIX,>=0,cpan,Required
+URI,>=0,cpan,Required
+URI::Escape,>=0,cpan,Required
+XML::LibXML,>=1.64,cpan,Required, standard perl module
+#
+# Requirements for HTTP::Daemon
+MIME::Base64,>=0,cpan,Optional, required for HTTP::Daemon
+UUID::Tiny,>=0,cpan,Optional, required for HTTP::Daemon
+HTTP::Daemon,>=0,cpan,Optional, required for HTTP::Daemon
+HTTP::Status,>=0,cpan,Optional, required for HTTP::Daemon
+#
+# Requirements for mod_perl
+APR::Table,>=0,perl,Optional, required for Apache mod_perl
+APR::UUID,>=0,cpan,Optional, required for Apache mod_perl
+Apache2::Access,>=0,cpan,Optional, required for Apache mod_perl
+Apache2::Const,>=0,perl,Optional, required for Apache mod_perl
+Apache2::Module,>=0,cpan,Optional, required for Apache mod_perl
+Apache2::RequestIO,>=0,perl,Optional, required for Apache mod_perl
+Apache2::RequestRec,>=0,perl,Optional, required for Apache mod_perl

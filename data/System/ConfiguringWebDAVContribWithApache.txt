@@ -1,0 +1,188 @@
+%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1356278806" format="1.1" version="1"}%
+---+ Configuring WebDAVContrib with Apache2 and mod_perl
+<!--
+   * Set CONFHOST = %URLPARAM{"confhosth" default="%HTTP_HOST%"}%
+   * Set CONFPATH = %URLPARAM{"confpath" default="/var/www/wiki"}%
+   * Set CONFURL = %URLPARAM{"confurl" default="/dav"}%
+-->
+If your site is already running on Apache with mod_perl, then the simplest
+way to configure WebDAV is to use the same Apache server. If you are using
+mod_fcgid, see ConfiguringWebDAVContribWithFCGI.
+
+---++ Configuration Wizard
+Configuring <nop>%TOPIC% for use with Foswiki and Apache mod_perl.
+---+++ Step 1: basic settings
+<div class="foswikiFormSteps">
+  <form name="config" action="%SCRIPTURLPATH{view}%/%WEB%/%TOPIC%#InstaInstr">
+  <div class="foswikiFormStep">
+    <h3>Foswiki server host:</h3>
+    <input class="foswikiInputField" type="text" name="confhost" size="80" value="%CONFHOST%" />
+    <div class="foswikiFormDescription">Enter the server host name.</div>
+  </div>
+  <div class="foswikiFormStep">
+    <h3>URL path:</h3>
+    <input class="foswikiInputField" type="text" name="confurl" size="80" value="%CONFURL%" />
+    <div class="foswikiFormDescription">Enter the required URL path to the DAV resources.</div>
+  </div>
+  <div class="foswikiFormStep">
+    <h3>Installation directory:</h3>
+    <input class="foswikiInputField" type="text" name="confpath" size="80" value="%CONFPATH%" />
+    <div class="foswikiFormDescription">Enter the directory path to your Foswiki installation on the server.</div>
+  </div>
+  <div class="foswikiFormStep foswikiFormLast foswikiFormButtons">
+    <input class="foswikiSubmit" type="submit" value="Submit" />
+    <div class="foswikiFormDescription">
+      Clicking on Submit will rewrite the installation
+      instructions below.
+    </div>
+  </div>
+  </form>
+</div>
+
+#InstaInstr
+---+++ Step 2: mod_perl configuration
+
+Create the file =%CONFPATH%/tools/WebDAVContrib_mod_perl_startup.pl= with the
+following content:
+
+<pre>
+use lib '%CONFPATH%/bin';
+do 'setlib.cfg';
+1;
+</pre>
+
+This tells !WebDAVContrib where you want to run Foswiki from.
+
+---+++ Step 3: Apache configuration 
+
+Add the following to your Apache configuration (must be included into the
+base configuration; will *not* work in =.htaccess=)
+
+This exposes the  =%CONFURL%= path on your server. You can change this location
+to whatever you want, but make sure the =FoswikiLocation= matches it.
+
+<pre>
+PerlRequire "%CONFPATH%/tools/WebDAVContrib_mod_perl_startup.pl"
+PerlLoadModule Apache::FoswikiDAVHandler
+&lt;Location "%CONFURL%">
+    SetHandler perl-script
+    FoswikiLocation "%CONFURL%"
+    FoswikiFilesysHandler Filesys::Virtual::Foswiki
+    PerlHandler Apache::FoswikiDAVHandler
+&lt;/Location>
+</pre>
+This will configure DAV *without authentication*, so all transactions will use
+the "guest" login. See "Configuring authentication" below for information
+on configuring web server authentication.
+
+Restart your apache server. 
+
+The path http://%CONFHOST%%CONFURL% should now show you all your root
+webs, when viewed from a DAV-enabled client.
+
+---+++ Step 4: Testing
+
+The best way to verify your server is working is to use a simple, reliable
+!WebDAV client program such as =cadaver= (available for most platforms
+- you can get a Windows version from
+http://www.phtagr.org/2009/04/01/cadaver-for-windows/ **).
+
+Run =cadaver= and open the DAV folder on the server:
+<pre>
+dav:!> open http://%CONFHOST%%CONFURL%
+dav:%CONFURL%/> ls
+Listing collection `%CONFURL%/': succeeded.
+Coll:   Main                                4096  Mar 25 12:42
+Coll:   Sandbox                             4096  Apr  6 08:19
+Coll:   System                             20480  Apr  7 10:32
+...
+dav:%CONFURL%/> cd Sandbox
+dav:%CONFURL%/> put packages.txt LoremIpsum.txt
+Progress: [===================>] 100.0% of 320 bytes succeeded
+dav:%CONFURL%/> cat LoremIpsum.txt
+Displaying `/dav/Sandbox/LoremIpsum.txt':
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+enim ad minim veniam, quis nostrud exercitation ullamco laboris
+nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+sunt in culpa qui officia deserunt mollit anim id est laborum....
+dav:%CONFURL%/> cd LoremIpsum_files
+dav:%CONFURL%/> put muspimerol.gif
+Progress: [===================>] 100.0% of 2800 bytes succeeded
+dav:%CONFURL%/> ls
+Listing collection `/%CONFURL%/Sandbox/LoremIpsum_files/': succeeded.
+        muspimerol.gif                  2800  Apr 12 14:38
+</pre>
+If cadaver reports any errors, check your apache error log on the server.
+
+You can verify that the !LoremIpsum topic has been created by going to %SCRIPTURL{view}%/Sandbox/LoremIpsum.
+
+=user="BaseUserMapping_666"= shows that the creation of the !LoremIpsum topic and the subsequent uploading of the =muspimerol.gif= attachment was done using the !WikiGuest user. If you try to do the same in the System directory, you will get a failure response:
+<pre>
+dav:!> open http://%CONFHOST%%CONFURL%
+dav:%CONFURL%/> cd Sandbox
+dav:%CONFURL%/> put packages.txt LoremIpsum.txt
+Uploading packages.txt to `/dav/System/LoremIpsum.txt':
+Progress: [=============================>] 100.0% of 320 bytes failed:
+401 Authorization Required
+</pre>
+
+(At this point attempting to access the !WebFolder using Windows XP service pack 2 allows you to browse the folders, but opening any files will fail)
+
+---+++ Step 5: Configuring authentication
+
+If you configured your server as described above, it will be configured *without* authentication. That means that all transactions will happen as the "guest" user. In most cases you will want to require a login by the client, so that the user can be identified.
+
+To configure authentication you simply protect the folder using
+an _Apache_ authentication method of choice. !WebDAVContrib will automatically
+log in to Foswiki using the username (or Wiki Name) that was used to log in
+to Apache.
+
+For example, you could use Basic Authentication to protect the DAV folder,
+using the password file used by the default Foswiki setup:
+<pre>
+PerlRequire "%CONFPATH%/tools/WebDAVContrib_mod_perl_startup.pl"
+PerlLoadModule Apache::FoswikiDAVHandler
+&lt;Location "%CONFURL%">
+    SetHandler perl-script
+    FoswikiLocation "%CONFURL%"
+    FoswikiFilesysHandler Filesys::Virtual::Foswiki
+    FoswikiDebug 0
+    PerlHandler Apache::FoswikiDAVHandler
+    %RED%AuthName "Foswiki"
+    AuthUserFile %CONFPATH%/data/.htpasswd
+    AuthType Basic
+    &lt;LimitExcept OPTIONS&gt;
+        require valid-user
+    &lt;/LimitExcept&gt;%ENDCOLOR%
+&lt;/Location>
+</pre>
+Restart the web server after any change to the Apache configuration.
+
+<pre>
+
+C:\Documents and Settings\Administrator\Desktop\cadaver>cadaver.bat
+dav:!> open http://%CONFHOST%%CONFURL%
+Authentication required for Foswiki on server `%CONFHOST%':
+Username: BillGates
+Password:
+dav:%CONFURL%/> ls
+Listing collection `/%CONFURL%/': succeeded.
+Coll:   Main                                4096  Feb 24 07:14
+Coll:   Sandbox                             4096  Apr 10 00:51
+Coll:   System                             24576  Apr  9 09:01
+...
+</pre>
+
+Note that Basic Authentication is much more secure if used over
+SSL (with https: URLs).
+
+---++ Debugging
+
+If you are having problems with !WebDAV you can enable tracing in the Apache
+handler and the file system interface using the =FoswikiDebug= Apache
+directive. See WebDAVContrib#Debugging for more information.
+
+
