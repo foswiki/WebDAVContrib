@@ -5,12 +5,12 @@
    * Set CONFPATH = %URLPARAM{"confpath" default="/var/www/wiki"}%
    * Set CONFURL = %URLPARAM{"confurl" default="/dav"}%
 -->
-If your site is already running on Apache with mod_perl, then the simplest
+If your site is already running on Apache2 with mod_perl2, then the simplest
 way to configure WebDAV is to use the same Apache server. If you are using
-mod_fcgid, see ConfiguringWebDAVContribWithFCGI.
+=mod_fcgid=, see ConfiguringWebDAVContribWithFCGI.
 
 ---++ Configuration Wizard
-Configuring <nop>%TOPIC% for use with Foswiki and Apache mod_perl.
+Configuring <nop>%TOPIC% for use with Foswiki and Apache2 mod_perl2.
 ---+++ Step 1: basic settings
 <div class="foswikiFormSteps">
   <form name="config" action="%SCRIPTURLPATH{view}%/%WEB%/%TOPIC%#InstaInstr">
@@ -46,6 +46,7 @@ Create the file =%CONFPATH%/tools/WebDAVContrib_mod_perl_startup.pl= with the
 following content:
 
 <pre>
+use ModPerl::RegistryLoader;
 use lib '%CONFPATH%/bin';
 do 'setlib.cfg';
 1;
@@ -160,6 +161,8 @@ PerlLoadModule Apache::FoswikiDAVHandler
 &lt;/Location>
 </pre>
 Restart the web server after any change to the Apache configuration.
+
+(Note that OPTIONS requests are excluded from authentication because of a bug in Windows WebDAV, which doesn't send authentication headers with OPTIONS requests. This is not a significant security risk, as OPTIONS only tells the client what the server's capabilities are.)
 
 <pre>
 
