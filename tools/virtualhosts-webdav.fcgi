@@ -30,6 +30,7 @@ use HTTP::Response ();
 use MIME::Base64 ();
 use Getopt::Long ();
 use Pod::Usage ();
+use FCGI::VirtualHostingFoswikiWebDAV ();
 
 my $detach = 0;
 my $fs = 'Foswiki';
@@ -48,10 +49,16 @@ my $trace = 0;
 my $removeStatusLine = 0;
 
 my $isOkay;
+my $max;
+my $size;
+my $check;
 
 my %options = (
     'listen|l=s'  => \$listen,
     'nproc|n=i'   => \$nproc,
+    'max|x=i'     => \$max,
+    'check|c=i'   => \$check,
+    'size|s=i'    => \$size,
     'pidfile|p=s' => \$pidfile,
     'manager|M=s' => \$manager,
     'daemon|d'    => \$detach,
@@ -99,7 +106,6 @@ if ( $fs eq 'PlainPlusAttrs' && ! -d $root ) {
 }
 
 # Get a daemon, and dispatch the request
-use FCGI::VirtualHostingFoswikiWebDAV ();
 my $daemon = FCGI::VirtualHostingFoswikiWebDAV->new(
     listen  => $listen,
     nproc   => $nproc,
@@ -108,6 +114,9 @@ my $daemon = FCGI::VirtualHostingFoswikiWebDAV->new(
     detach  => $detach,
     quiet   => $quiet,
     removeStatusLine => $removeStatusLine,
+    max     => $max,
+    size    => $size,
+    check   => $check,
 
     filesys => 'Filesys::Virtual::' . $fs,
     trace => $trace,
@@ -144,6 +153,9 @@ __DATA__
     -n --nproc      Number of backends to use, defaults to 1
     -p --pidfile    File used to write pid to
     -M --manager    FCGI manager class
+    -x --max        Maximum requests served per server instance
+    -c --check      Number of requests when to check the size of the server
+    -s --size       Maximum memory size of a server before being recycled
     -r --rsl        Remove status line from responses; required by Apache
     -d --daemon     Detach from terminal and keeps running as a daemon
     -q --quiet      Disable notification messages

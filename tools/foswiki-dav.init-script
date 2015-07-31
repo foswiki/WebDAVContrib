@@ -23,6 +23,8 @@ FOSWIKI_FCGI=webdav.fcgi
 FOSWIKI_BIND=127.0.0.1:9001
 FOSWIKI_CHILDREN=5
 FOSWIKI_PIDFILE=/var/run/$NAME.pid
+FOSWIKI_TRACE=0
+FOSWIKI_FILESYSTEM=Foswiki
 
 # Include defaults if available
 if [ -f /etc/default/$NAME ] ; then
@@ -30,7 +32,7 @@ if [ -f /etc/default/$NAME ] ; then
 fi
 
 FOSWIKI_DAEMON=$FOSWIKI_ROOT/tools/$FOSWIKI_FCGI
-FOSWIKI_DAEMON_OPTS="-n $FOSWIKI_CHILDREN -l $FOSWIKI_BIND -p $FOSWIKI_PIDFILE -d -q"
+FOSWIKI_DAEMON_OPTS="-n $FOSWIKI_CHILDREN -l $FOSWIKI_BIND -p $FOSWIKI_PIDFILE -d -q -t $FOSWIKI_TRACE -fs $FOSWIKI_FILESYSTEM"
 
 start() {
         log_daemon_msg "Starting $DESC" $NAME
@@ -93,7 +95,7 @@ case "$1" in
     status
     ;;
   *)
-    echo "Usage: $NAME {start|stop|restart}"
+    echo "Usage: $NAME {start|stop|restart|reload|status}"
     exit 1
     ;;
 esac
