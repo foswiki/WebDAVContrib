@@ -52,17 +52,18 @@ my %default_props = map { ( '{DAV:}' . $_ => 1 ) } (
     'getcontentlanguage', 'getcontentlength',
     'getcontenttype',     'getetag',
     'getlastmodified',    'lockdiscovery',
-    'resourcetype',       'supportedlock'
+    'resourcetype',       'supportedlock',
+    'ishidden'
 );
 
 our $trace = 0;
 
-sub T_ERROR    { $trace & 0x01 } # log errors
-sub T_REQUEST  { $trace & 0x02 } # log XML in requests
-sub T_ACTION   { $trace & 0x04 } # log action processing
-sub T_RESPONSE { $trace & 0x08 } # log XML responses
-sub T_MEMORY   { $trace & 0x10 } # memory usage
-sub T_AUTH     { $trace & 0x20 } # Authentication
+sub T_ERROR    { $trace & 0x01 }    # log errors
+sub T_REQUEST  { $trace & 0x02 }    # log XML in requests
+sub T_ACTION   { $trace & 0x04 }    # log action processing
+sub T_RESPONSE { $trace & 0x08 }    # log XML responses
+sub T_MEMORY   { $trace & 0x10 }    # memory usage
+sub T_AUTH     { $trace & 0x20 }    # Authentication
 
 sub new {
     my ( $class, %args ) = @_;
@@ -87,8 +88,8 @@ sub _XMLParser {
 sub handleRequest {
     my ( $this, $request, $response, $auth_provider ) = @_;
 
-    my $uri    = Encode::decode_utf8(
-	URI::Escape::uri_unescape( $request->uri() ) );
+    my $uri =
+      Encode::decode_utf8( URI::Escape::uri_unescape( $request->uri() ) );
     my $method = uc( $request->method() );
 
     my $memHandle;
@@ -120,7 +121,7 @@ sub handleRequest {
         }
 
         _trace( $method, $uri ) if $trace;
-        _trace( $request ) if T_REQUEST;
+        _trace($request) if T_REQUEST;
 
         local $filesys = $this->getFilesys( $uri, $request );
 
@@ -130,7 +131,9 @@ sub handleRequest {
             || $this->_processAuth( $request, $response, $auth_provider ) )
         {
 
-            eval { $status = $this->$method( $uri, $request, $response, $content ); };
+            eval {
+                $status = $this->$method( $uri, $request, $response, $content );
+            };
             if ($@) {
                 _trace("Error: $@") if T_ERROR;
                 $status = HTTP_BAD_REQUEST;
@@ -259,7 +262,8 @@ sub COPY {
         # If the destination already exists and it's a directory,
         # we can't proceeed
         if ( $filesys->test( 'd', $destination ) ) {
-            _trace( 'Error: Destination exists and is a dir', $destination ) if T_ERROR;
+            _trace( 'Error: Destination exists and is a dir', $destination )
+              if T_ERROR;
             return HTTP_NO_CONTENT;    # litmus/spec requires this...
         }
 
@@ -285,13 +289,15 @@ sub COPY {
         # Picked the 409 code because that's what the
         # litmus test says I should put here.
         if ( !$fh ) {
-            _trace( 'Error: Cannot open the destination', $destination ) if T_ERROR;
+            _trace( 'Error: Cannot open the destination', $destination )
+              if T_ERROR;
             return HTTP_CONFLICT;    # huh?
         }
 
         print $fh $contents;
         if ( my $e = $filesys->close_write($fh) ) {
-            _trace( 'Error: Cannot close the destination', $destination, $e ) if T_ERROR;
+            _trace( 'Error: Cannot close the destination', $destination, $e )
+              if T_ERROR;
             return HTTP_FORBIDDEN;
         }
 
@@ -332,7 +338,8 @@ sub COPY {
                 $this->_unlink($dest_dir);
             }
             else {
-                _trace( 'Error: Destination dir already exists', $dest_dir ) if T_ERROR;
+                _trace( 'Error: Destination dir already exists', $dest_dir )
+                  if T_ERROR;
                 return HTTP_UNAUTHORIZED;
             }
         }
@@ -366,7 +373,8 @@ sub COPY {
                 $this->_unlink($dest_file);
             }
             else {
-                _trace( 'Error: File exists and !overwrite', $dest_file ) if T_ERROR;
+                _trace( 'Error: File exists and !overwrite', $dest_file )
+                  if T_ERROR;
                 return HTTP_UNAUTHORIZED;
             }
         }
@@ -448,7 +456,8 @@ sub _DELETE {
             }
             if ( $filesys->test( 'e', $file ) ) {
                 my $stat = $this->_unlink($file);
-                _trace( 'Error: Unlink failed:', $file, $! ) if T_ERROR && !$stat;
+                _trace( 'Error: Unlink failed:', $file, $! )
+                  if T_ERROR && !$stat;
             }
         }
     }
@@ -521,7 +530,11 @@ sub GET {
 
         $filesys->close_read($fh);
 
-        _emitBody( $response, $file, type => _deduceMimeType($path), no_conversion => 1 );
+        _emitBody(
+            $response, $file,
+            type          => _deduceMimeType($path),
+            no_conversion => 1
+        );
 
         _add_etag( $response, $path );
 
@@ -655,7 +668,7 @@ sub MOVE {
         # Rename not supported by the handler, or renaming to a different
         # handler. Perform a copy and then a delete, something that makes
         # sense but has specific drawbacks according to the WebDAV book.
-        my $copy_result = $this->COPY($path, $request);
+        my $copy_result = $this->COPY( $path, $request );
 
         if ( $copy_result >= 300 ) {
             _trace( $path, $destination, 'copy', $copy_result ) if T_ACTION;
@@ -708,7 +721,8 @@ sub MOVE {
                 _trace( 'Error:', $path, 'is locked' ) if T_ERROR;
                 return HTTP_LOCKED;
             }
-            _trace( 'Error:', $path, 'rename', $path, 'failed;', $! ) if T_ERROR;
+            _trace( 'Error:', $path, 'rename', $path, 'failed;', $! )
+              if T_ERROR;
             return HTTP_UNPROCESSABLE_ENTITY;
         }
     }
@@ -741,7 +755,6 @@ sub PROPFIND {
     }
 
     my @files;
-
     if ( $depth == 0 ) {
         @files = ($path);
     }
@@ -807,14 +820,16 @@ sub PROPFIND {
             next unless ( $node->nodeType == 1 );
             if ( _fullName($node) eq '{DAV:}allprop' ) {
                 if ($mode) {    # (14.20)
-                    _trace( 'Error: allprop and', $mode, 'together' ) if T_ERROR;
+                    _trace( 'Error: allprop and', $mode, 'together' )
+                      if T_ERROR;
                     return HTTP_BAD_REQUEST;
                 }
                 $mode = 'allprop';
             }
             elsif ( _fullName($node) eq '{DAV:}include' ) {
                 if ( $mode ne 'allprop' ) {    # (14.20)
-                    _trace( 'Error: include and', $mode, 'together' ) if T_ERROR;
+                    _trace( 'Error: include and', $mode, 'together' )
+                      if T_ERROR;
                     return HTTP_BAD_REQUEST;
                 }
                 my $prop = $node->firstChild;
@@ -828,7 +843,8 @@ sub PROPFIND {
             }
             elsif ( _fullName($node) eq '{DAV:}propname' ) {
                 if ($mode) {    # (14.20)
-                    _trace( 'Error: propname and', $mode, 'together' ) if T_ERROR;
+                    _trace( 'Error: propname and', $mode, 'together' )
+                      if T_ERROR;
                     return HTTP_BAD_REQUEST;
                 }
                 return HTTP_BAD_REQUEST if $mode;    # (14.20)
@@ -1009,7 +1025,7 @@ sub LOCK {
         else {
 
             # SMELL: could do better
-            _trace( "Error: Can't handle timeout $timeout") if T_ERROR;
+            _trace("Error: Can't handle timeout $timeout") if T_ERROR;
             return HTTP_BAD_REQUEST;
         }
     }
@@ -1029,7 +1045,7 @@ sub LOCK {
 
         my $fc = _firstChildNode($indoc);
         if ( _fullName($fc) ne '{DAV:}lockinfo' ) {
-            _trace( 'Error: lockinfo expected') if T_ERROR;
+            _trace('Error: lockinfo expected') if T_ERROR;
             return HTTP_BAD_REQUEST;
         }
 
@@ -1096,7 +1112,7 @@ sub LOCK {
         # not prevent the named lock from being refreshed.
         my $if = _parseIfHeader($request);
         unless ( $if && scalar(@$if) && scalar( @{ $if->[0] } ) ) {
-            _trace( 'Error: Bad refresh') if T_ERROR;
+            _trace('Error: Bad refresh') if T_ERROR;
             return HTTP_BAD_REQUEST;
         }
         $lock{token} = $if->[0]->[0]->{token};
@@ -1110,26 +1126,27 @@ sub LOCK {
     my @failedPaths;
     foreach my $livelock ( $filesys->get_locks( $path, $lock{depth} ) ) {
 
-	# Shared locks don't block unless the new $lock is
-	# exclusive, but exclusive locks always block
-	next unless ( $livelock->{exclusive} || $lock{exclusive} );
+        # Shared locks don't block unless the new $lock is
+        # exclusive, but exclusive locks always block
+        next unless ( $livelock->{exclusive} || $lock{exclusive} );
 
-	if ( $livelock->{token} eq $lock{token} && $action eq 'refresh' ) {
+        if ( $livelock->{token} eq $lock{token} && $action eq 'refresh' ) {
 
-	    # (6.6) The timeout counter must be restarted if a refresh
-	    # lock request is successful.
-	    $filesys->refresh_lock( $lock{token} );
-	    next;
-	}
+            # (6.6) The timeout counter must be restarted if a refresh
+            # lock request is successful.
+            $filesys->refresh_lock( $lock{token} );
+            next;
+        }
 
-	#_trace( 'Lock', $livelock, 'blocks', \%lock ) if T_ACTION;
+        #_trace( 'Lock', $livelock, 'blocks', \%lock ) if T_ACTION;
 
-	unless (_clientIs('LibreOffice', $request)) {
-	    # LibreOffice lock handling is brain dead. So refresh the locks it
-	    # gives us, but don't fail on a bad lock. This means there is a risk
-	    # of simultaneous changes with LibreOffice.
-	    push( @failedPaths, $livelock->{path} );
-	}
+        unless ( _clientIs( 'LibreOffice', $request ) ) {
+
+            # LibreOffice lock handling is brain dead. So refresh the locks it
+            # gives us, but don't fail on a bad lock. This means there is a risk
+            # of simultaneous changes with LibreOffice.
+            push( @failedPaths, $livelock->{path} );
+        }
     }
 
     if ( scalar(@failedPaths) ) {
@@ -1198,7 +1215,8 @@ sub UNLOCK {
     if ( $filesys->remove_lock($locktoken) ) {
         return HTTP_NO_CONTENT;
     }
-    _trace( 'Error: Could not remove lock', $locktoken, 'on', $path ) if T_ERROR;
+    _trace( 'Error: Could not remove lock', $locktoken, 'on', $path )
+      if T_ERROR;
     return HTTP_FORBIDDEN;
 }
 
@@ -1228,9 +1246,9 @@ sub getFilesys {
 
     return $module->new(
         {
-            location  => $this->{location},     # url path
-            root_path => $this->{root_path},    # file path
-            trace     => $this->{trace} >> 16   # Pass trace bits to filesys
+            location  => $this->{location},      # url path
+            root_path => $this->{root_path},     # file path
+            trace     => $this->{trace} >> 16    # Pass trace bits to filesys
         }
     );
 }
@@ -1286,8 +1304,8 @@ sub _trace {
                 push @data, $a->as_string();
             }
             else {
-		my $desc = Data::Dumper->Dump( [$a] );
-		$desc =~ s/^\$VAR1\s*=\s*//;
+                my $desc = Data::Dumper->Dump( [$a] );
+                $desc =~ s/^\$VAR1\s*=\s*//;
                 push @data, $desc;
             }
         }
@@ -1299,10 +1317,10 @@ sub _trace {
         }
     }
     my $mess = Encode::encode( "utf-8", join( ' ', @data ) );
-    binmode(STDERR, ":utf8");
+    binmode( STDERR, ":utf8" );
 
     # Print to webserver log
-    print STDERR 'WD@'.time.": $mess\n";
+    print STDERR 'WD@' . time . ": $mess\n";
 }
 
 # Find the first non-text child node of an XML node
@@ -1418,7 +1436,8 @@ sub _checkIfHeader {
                     }
                 }
                 unless ($condition_passed) {
-                    _trace( 'If: lock condition failed:', $condition->{token} ) if T_ACTION;
+                    _trace( 'If: lock condition failed:', $condition->{token} )
+                      if T_ACTION;
                 }
             }
             $condition_passed = !$condition_passed if ( $condition->{invert} );
@@ -1465,7 +1484,7 @@ sub _checkLocksAreSubmitted {
                     # expressed was found to be true.
                     next LOCK
                       if defined $condition->{token}
-                          && $condition->{token} eq $lock->{token};
+                      && $condition->{token} eq $lock->{token};
                 }
             }
             push(
@@ -1721,8 +1740,10 @@ sub _xml_find_props {
     if ( $mode ne 'propname' ) {
 
         # get the property value
-        if ( $propname =~ /^{DAV:}(.*)/ ) {
-            my $fn = '_prop_' . $1;
+        if (   $propname =~ /^\{DAV:\}(.*)/
+            || $propname =~ /^\{.*\}(ishidden)$/i )
+        {
+            my $fn = '_prop_' . lc($1);
             $fn =~ s/-/_/g;
             if ( defined &$fn ) {
                 no strict 'refs';
@@ -1818,6 +1839,12 @@ sub _prop_creationdate {
     my ( $datum, $path ) = @_;
     my $stat = _stat($path);
     $datum->appendText( _formatISOTime( $stat->{creationdate} || 0 ) );
+    return 1;
+}
+
+sub _prop_ishidden {
+    my ( $datum, $path ) = @_;
+    $datum->appendText( $path =~ /\/\.[^\/]+$/ ? 1 : 0 );
     return 1;
 }
 
@@ -1973,11 +2000,15 @@ sub _processAuth {
         my ( $loginName, $password ) = $auth_provider->user();
 
         unless ($loginName) {
-            _trace( 'Error: Could not find login name') if T_ERROR;
+            _trace('Error: Could not find login name') if T_ERROR;
 
             # Login failed; reject the request
             $auth_provider->auth_failed($response);
-            _emitBody( $response, "ERROR: (401) Can't login", type => 'text/plain' );
+            _emitBody(
+                $response,
+                "ERROR: (401) Can't login",
+                type => 'text/plain'
+            );
             return 0;
         }
 
@@ -1999,8 +2030,11 @@ sub _processAuth {
             _trace( 'Error: Login failed for', $loginName ) if T_ERROR;
 
             # Login failed; reject the request
-            _emitBody( $response, "ERROR: (401) Can't login as $loginName",
-                type => 'text/plain' );
+            _emitBody(
+                $response,
+                "ERROR: (401) Can't login as $loginName",
+                type => 'text/plain'
+            );
             return 0;
         }
         _trace( $loginName, 'logged in' ) if T_AUTH;
@@ -2042,20 +2076,23 @@ sub _emitBody {
     my ( $response, $string, %options ) = @_;
 
     $string ||= '';
+
     # Note: text/xml would cause the charset in the <?xml to be ignored, so have
     # to use application/xml
     my $type = $options{type} || 'application/xml';
 
-    if ( T_RESPONSE ) {
+    if (T_RESPONSE) {
         if ( $type eq 'application/xml' ) {
-            _trace( $string );
-        } else {
+            _trace($string);
+        }
+        else {
             _trace( $type, 'response, ', length($string), 'characters' );
         }
     }
 
-    # no_conversion is used to force 
+    # no_conversion is used to force
     unless ( $options{no_conversion} ) {
+
         # Convert perl strings to UTF-8 bytes.
         utf8::encode($string);
         $type .= '; charset="utf-8"';
@@ -2067,7 +2104,7 @@ sub _emitBody {
     # understand chunked encoding.
     $response->header( 'Content-Length' => length($string) );
     $response->header( 'FW-Signature'   => $RELEASE );
-    $response->content( $string );
+    $response->content($string);
 }
 
 # Look up mime types DB to map a file extension to a mime type
