@@ -1842,6 +1842,8 @@ sub _prop_creationdate {
     return 1;
 }
 
+# ishidden handling is based on the usage in namespace http://ucb.openoffice.org/dav/props/,
+# but is assumed to be used consistently in all other namespaces
 sub _prop_ishidden {
     my ( $datum, $path ) = @_;
     $datum->appendText( $path =~ /\/\.[^\/]+$/ ? 1 : 0 );
