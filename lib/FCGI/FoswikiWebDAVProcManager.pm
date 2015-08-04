@@ -4,8 +4,8 @@ package FCGI::FoswikiWebDAVProcManager;
 use strict;
 use warnings;
 
-use FCGI::ProcManager;
-our @ISA = qw( FCGI::ProcManager );
+use FCGI::ProcManager::Constrained;
+our @ISA = qw( FCGI::ProcManager::Constrained );
 
 sub sig_manager {
     my $this = shift;
@@ -16,27 +16,27 @@ sub sig_manager {
 }
 
 sub pm_die {
-    my ($this, $msg, $n) = @_;
+    my ( $this, $msg, $n ) = @_;
 
-    $msg ||= ''; # protect against error in FCGI.pm
+    $msg ||= '';    # protect against error in FCGI.pm
 
-    if ($this->{client}{hupRecieved}) {
+    if ( $this->{client}{hupRecieved} ) {
         $this->{client}->reExec;
     }
     else {
-        $this->SUPER::pm_die($msg, $n);
+        $this->SUPER::pm_die( $msg, $n );
     }
 }
 
 sub pm_notify {
-    my ($this, $msg) = @_;
+    my ( $this, $msg ) = @_;
 
-    return if $this->{quiet};    
+    return if $this->{quiet};
     $this->SUPER::pm_notify($msg);
 }
 
 sub pm_change_process_name {
-    my ($this,$name) = @_;
+    my ( $this, $name ) = @_;
 
     $name =~ s/perl/foswiki-dav/g;
     $0 = $name;

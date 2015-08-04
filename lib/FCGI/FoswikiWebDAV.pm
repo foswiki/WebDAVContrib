@@ -18,7 +18,7 @@ use POSIX qw(:signal_h);
 use HTTP::WebDAV    ();
 use HTTP::BasicAuth ();
 use Foswiki         ();
-use Cwd ();
+use Cwd             ();
 
 our $VERSION = '1.0.0';
 
@@ -29,16 +29,19 @@ sub new {
     $this->{manager}     ||= 'FCGI::FoswikiWebDAVProcManager';
     $this->{nproc}       ||= 1;
     $this->{maxRequests} ||= 100;
-    $this->{sock}        = 0;
-    $this->{hupRecieved} = 0;
-    $this->{removeStatusLine} = $args{removeStatusLine};
+    $this->{sock}                 = 0;
+    $this->{hupRecieved}          = 0;
+    $this->{removeStatusLine}     = $args{removeStatusLine};
+    $this->{maxRequests}          = $args{max};
+    $this->{maxSize}              = $args{size};
+    $this->{sizecheckNumRequests} = $args{check};
 
     if ( defined $this->{pidfile} ) {
         $this->{pidfile} =~ /^(.*)$/ and $this->{pidfile} = $1;
     }
 
-    ($this->{script}) = $0         =~ /^(.*)$/;
-    ($this->{dir})  = Cwd::cwd() =~ /^(.*)$/;
+    ( $this->{script} ) = $0         =~ /^(.*)$/;
+    ( $this->{dir} )    = Cwd::cwd() =~ /^(.*)$/;
 
     return $this;
 }
@@ -51,21 +54,25 @@ sub run {
           or die "Failed to create FastCGI socket: $!";
     }
 
-    my $r = FCGI::Request( \*STDIN, \*STDOUT, \*STDERR, \%ENV, $this->{sock},
+    my $r =
+      FCGI::Request( \*STDIN, \*STDOUT, \*STDERR, \%ENV, $this->{sock},
         &FCGI::FAIL_ACCEPT_ON_INTR );
     my $manager;
 
-    if ($this->{listen}) {
+    if ( $this->{listen} ) {
 
         $this->fork() if $this->{detach};
         eval "use " . $this->{manager} . "; 1";
         unless ($@) {
             $manager = $this->{manager}->new(
                 {
-                    client => $this, 
-                    n_processes => $this->{nproc},
-                    pid_fname   => $this->{pidfile},
-                    quiet       => $this->{quiet}
+                    client                 => $this,
+                    n_processes            => $this->{nproc},
+                    pid_fname              => $this->{pidfile},
+                    max_size               => $this->{maxRequests},
+                    max_requests           => $this->{maxSize},
+                    sizecheck_num_requests => $this->{sizecheckNumRequests},
+                    quiet                  => $this->{quiet}
                 }
             );
             $manager->pm_manage();
@@ -126,17 +133,14 @@ sub run {
 
         # Send response
         my $rs = $response->as_string();
+
         # Apache FCGID doesn't support NPH and can't parse off the header
         $rs =~ s/^HTTP.*?\n//s if $this->{removeStatusLine};
         print $rs;
 
         # check lifetime conditions
         my $mtime = ( stat $localSiteCfg )[9];
-        $this->{maxRequests}--;
-        if (   $mtime > $lastMTime
-            || $this->{hupRecieved}
-            || $this->{maxRequests} == 0 )
-        {
+        if ( $mtime > $lastMTime || $this->{hupRecieved} ) {
             $r->LastCall();
             if ($manager) {
                 kill SIGHUP, $manager->pm_parameter('MANAGER_PID');
@@ -176,10 +180,9 @@ sub reExec {
     my $perl = $Config::Config{perlpath};
 
     chdir $this->{dir}
-      or die
-      "FCGI::FoswikiWebDAV::reExec(): Could not restore directory: $!";
+      or die "FCGI::FoswikiWebDAV::reExec(): Could not restore directory: $!";
 
-    exec $perl, '-wT', $this->{script}, map { /^(.*)$/; $1 } @ARGV
+    exec $perl, $this->{script}, map { /^(.*)$/; $1 } @ARGV
       or die "FCGI::FoswikiWebDAV::reExec(): Could not exec(): $!";
 }
 

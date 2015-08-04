@@ -30,6 +30,7 @@ use HTTP::Response ();
 use MIME::Base64 ();
 use Getopt::Long ();
 use Pod::Usage ();
+use FCGI::FoswikiWebDAV ();
 
 my $detach = 0;
 my $fs = 'Foswiki';
@@ -47,10 +48,16 @@ my $trace = 0;
 my $removeStatusLine = 0;
 
 my $isOkay;
+my $max;
+my $size;
+my $check;
 
 my %options = (
     'listen|l=s'  => \$listen,
     'nproc|n=i'   => \$nproc,
+    'max|x=i'     => \$max,
+    'check|c=i'   => \$check,
+    'size|s=i'    => \$size,
     'pidfile|p=s' => \$pidfile,
     'manager|M=s' => \$manager,
     'daemon|d'    => \$detach,
@@ -93,7 +100,6 @@ sub parseURL {
 }
 
 # Get a daemon, and dispatch the request
-use FCGI::FoswikiWebDAV ();
 my $daemon = FCGI::FoswikiWebDAV->new(
     listen  => $listen,
     nproc   => $nproc,
@@ -102,6 +108,9 @@ my $daemon = FCGI::FoswikiWebDAV->new(
     detach  => $detach,
     quiet   => $quiet,
     removeStatusLine => $removeStatusLine,
+    max     => $max,
+    size    => $size,
+    check   => $check,
 
     filesys => 'Filesys::Virtual::' . $fs,
     trace => $trace,

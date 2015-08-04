@@ -4,29 +4,33 @@ package FCGI::VirtualHostingFoswikiWebDAV;
 use strict;
 use warnings;
 
-use Foswiki ();
+use Foswiki                                              ();
 use Foswiki::Contrib::VirtualHostingContrib::VirtualHost ();
-use FCGI::FoswikiWebDAV ();
+use FCGI::FoswikiWebDAV                                  ();
 
 our @ISA = ('FCGI::FoswikiWebDAV');
 
 sub handleRequest {
-  my ($this, $request, $response, $auth_provider) = @_;
+    my ( $this, $request, $response, $auth_provider ) = @_;
 
-  my $host = $request->header("host");
+    my $host = $request->header("host");
+    $host =~ s/:.*$//;    # strip off port
 
-  my $status;
-  Foswiki::Contrib::VirtualHostingContrib::VirtualHost->run_on(
-    $host,
-    sub {
-      # change the process name during the request
-      local $0 = sprintf("foswiki-virtualhost-webdav[%s%s]", $host, $request->uri());
+    my $status;
+    Foswiki::Contrib::VirtualHostingContrib::VirtualHost->run_on(
+        $host,
+        sub {
+            # change the process name during the request
+            local $0 = sprintf( "foswiki-virtualhost-webdav[%s%s]",
+                $host, $request->uri() );
 
-      $status = $this->SUPER::handleRequest($request, $response, $auth_provider);
-    }
-  );
+            $status =
+              $this->SUPER::handleRequest( $request, $response,
+                $auth_provider );
+        }
+    );
 
-  return $status;
+    return $status;
 }
 
 1;
