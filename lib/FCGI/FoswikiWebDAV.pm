@@ -104,27 +104,28 @@ sub run {
         $SIG{__DIE__}  = sub { print STDERR "DIE ",  @_ };
 
         # Pull in FCGI environment
-        my $r = new HTTP::Request( $ENV{REQUEST_METHOD}, $ENV{REQUEST_URI} );
+        my $request =
+          new HTTP::Request( $ENV{REQUEST_METHOD}, $ENV{REQUEST_URI} );
 
         foreach my $header ( keys %ENV ) {
             next unless $header =~ /^(?:HTTP|CONTENT|COOKIE)/i;
             ( my $field = $header ) =~ s/^HTTPS?_//;
-            $r->header( $field => $ENV{$header} );
+            $request->header( $field => $ENV{$header} );
         }
 
         # Pull in content
-        if ( my $bytes = $r->header('Content-Length') ) {
+        if ( my $bytes = $request->header('Content-Length') ) {
             my $content;
             my $read = read( STDIN, $content, $bytes );
-            $r->content($content);
+            $request->content($content);
         }
 
         # Compose response
         my $response = new HTTP::Response();
         $response->protocol('HTTP/1.1');
         my $status =
-          $this->handleRequest( $r, $response,
-            new HTTP::BasicAuth( $r, $this->{realm} ) );
+          $this->handleRequest( $request, $response,
+            new HTTP::BasicAuth( $request, $this->{realm} ) );
 
         # FCGI isn't happy with just the status line; it needs the
         # header field as well.
