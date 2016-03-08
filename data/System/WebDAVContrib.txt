@@ -109,7 +109,8 @@ Many thanks to the following sponsors for supporting this work:
 ---++ Change History
 
 %TABLE{columnwidths="7em" tablewidth="100%"}%
-|  08 Mar 2016: | Foswikitask:Item14018 - fixed Can't locate object method "LastCall" via package "HTTP::Headers" (Foswiki:Main.FlorianSchlichting) |
+|  08 Mar 2016: | Foswikitask:Item14018 - fixed Can't locate object method "LastCall" via package "HTTP::Headers" (Foswiki:Main.FlorianSchlichting); \
+                  Foswikitask:Item13799 - fails to connect network drive on Windows 7 (Foswiki:Main.FlorianSchlichting) |
 
 <!-- Do _not_ attempt to edit this topic; it is auto-generated. Please add comments/questions/remarks to the feedback topic on foswiki.org instead. -->
 

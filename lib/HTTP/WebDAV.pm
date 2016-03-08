@@ -48,11 +48,14 @@ my @METHODS = qw( COPY DELETE GET HEAD MKCOL MOVE OPTIONS POST PROPFIND
 
 # The list of live properties specified by RFC4918
 my %default_props = map { ( '{DAV:}' . $_ => 1 ) } (
-    'creationdate',       'displayname',
-    'getcontentlanguage', 'getcontentlength',
-    'getcontenttype',     'getetag',
-    'getlastmodified',    'lockdiscovery',
-    'resourcetype',       'supportedlock',
+    'creationdate',
+
+    #'displayname',
+    #'getcontentlanguage',
+    'getcontentlength',
+    'getcontenttype',  'getetag',
+    'getlastmodified', 'lockdiscovery',
+    'resourcetype',    'supportedlock',
     'ishidden'
 );
 
