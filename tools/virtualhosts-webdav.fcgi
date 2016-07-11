@@ -22,6 +22,7 @@ BEGIN {
     my $setlib = File::Spec->catpath( $volume, "$binDir../bin", 'setlib.cfg' );
     @INC = ( '.', grep { $_ ne '.' } @INC ) unless $binDir;
     require $setlib;
+    $Foswiki::cfg{Engine} = 'Foswiki::Engine::CGI';
 }
 
 use FCGI ();

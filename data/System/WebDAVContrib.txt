@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="autosave" date="1356278806" format="1.1" version="1"}%
+%META:TOPICINFO{author="ProjectContributor" comment="" date="1468227008" format="1.1" version="1"}%
 ---+!! !WebDAVContrib
 <img src="http://webdav.org/images/webdav-logo.jpg" style="float:right">
 %FORMFIELD{"Description"}%
@@ -109,6 +109,7 @@ Many thanks to the following sponsors for supporting this work:
 ---++ Change History
 
 %TABLE{columnwidths="7em" tablewidth="100%"}%
+|  11 Jul 2016: | Foswikitask:Item13571 - fixed compatibility with Foswiki-2 | 
 |  08 Mar 2016: | Foswikitask:Item14018 - fixed Can't locate object method "LastCall" via package "HTTP::Headers" (Foswiki:Main.FlorianSchlichting); \
                   Foswikitask:Item13799 - fails to connect network drive on Windows 7 (Foswiki:Main.FlorianSchlichting) |
 
@@ -122,13 +123,13 @@ Many thanks to the following sponsors for supporting this work:
 %META:FIELD{name="Description" title="Description" value="%25$SHORTDESCRIPTION%25"}%
 %META:FIELD{name="ExtensionClassification" title="ExtensionClassification" value="Data and Files, User interactivity"}%
 %META:FIELD{name="ExtensionType" title="ExtensionType" value="PluginPackage"}%
-%META:FIELD{name="Home" title="Home" value="http://foswiki.org/Extensions/WebDAVContrib"}%
+%META:FIELD{name="Home" title="Home" value="https://foswiki.org/Extensions/WebDAVContrib"}%
 %META:FIELD{name="ImageUrl" attributes="" title="ImageUrl" value=""}%
 %META:FIELD{name="License" title="License" value="[[http://www.gnu.org/licenses/old-licenses/gpl-2.0.html][GPL2 (Gnu General Public License v2)]]"}%
 %META:FIELD{name="ModificationPolicy" title="ModificationPolicy" value="CoordinateWithAuthor"}%
 %META:FIELD{name="NewsFlash" attributes="" title="NewsFlash" value=""}%
 %META:FIELD{name="Release" title="Release" value="%$RELEASE%"}%
 %META:FIELD{name="Repository" title="Repository" value="https://github.com/foswiki/WebDAVContrib"}%
-%META:FIELD{name="Support" title="Support" value="http://foswiki.org/Support/WebDAVContrib"}%
+%META:FIELD{name="Support" title="Support" value="https://foswiki.org/Support/WebDAVContrib"}%
 %META:FIELD{name="SupportUrl" title="SupportUrl" value="Support.%25TOPIC%25"}%
 %META:FIELD{name="Version" title="Version" value="%$VERSION%"}%

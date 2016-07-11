@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="reprev" date="1392324741" format="1.1" reprev="2" version="2"}%
+%META:TOPICINFO{author="ProjectContributor" comment="" date="1468227008" format="1.1"  version="1"}%
 %META:TOPICPARENT{name="WebDAVContrib"}%
 
 ---+ Configuring !WebDAVContrib with FCGI
@@ -71,7 +71,7 @@ lighttpd -f <path to config file>
 </verbatim>
 
 If you intend to use the =lighttpd= web server with Foswiki you are highly recommended
-to read about the [[http://foswiki.org/Extensions/FastCGIEngineContrib][FastCGIEngineContrib]].
+to read about the [[https://foswiki.org/Extensions/FastCGIEngineContrib][FastCGIEngineContrib]].
 
 If you use a different filesystem - for example, the =PlainPlusAttrs= filesystem
 which can be used to export simple directory structures - then you may need
@@ -154,7 +154,7 @@ server {
 }
 </verbatim>
 
-See http://foswiki.org/Support/FoswikiOnNginx for a full description on how to install Foswiki under nginx.
+See https://foswiki.org/Support/FoswikiOnNginx for a full description on how to install Foswiki under nginx.
 
 ---++ Apache
 

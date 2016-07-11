@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 # Ultra-lightweight WebDAV server daemon
 # See System.ConfiguringWebDAVContribWithHTTPDaemon
 #
