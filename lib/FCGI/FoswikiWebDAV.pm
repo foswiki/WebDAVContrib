@@ -101,7 +101,8 @@ sub run {
 
         # Need handlers, or FCGI pumps these into the void
         $SIG{__WARN__} = sub { print STDERR "WARN ", @_ };
-        $SIG{__DIE__}  = sub { print STDERR "DIE ",  @_ };
+
+        #        $SIG{__DIE__}  = sub { print STDERR "DIE ", @_ };
 
         # Pull in FCGI environment
         my $request =

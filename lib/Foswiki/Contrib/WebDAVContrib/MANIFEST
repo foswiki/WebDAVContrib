@@ -21,3 +21,4 @@ tools/http_daemon.pl 0755 Stand-alone web server
 tools/webdav.fcgi 0755 FCGI daemon script
 tools/virtualhosts-webdav.fcgi 0755 FCGI daemon script
 tools/foswiki-dav.init-script 0755
+tools/systemd/foswiki-dav.service 0755

@@ -7,21 +7,25 @@
 # Should-Stop:       fam
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Start the foswiki backend server.
+# Short-Description: Start the foswiki webdav connector server.
 ### END INIT INFO
 
-DESC="Foswiki WebDAV Connector"
+DESC="Foswiki WebDAV connector"
 NAME=foswiki-dav
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 USER=www-data
-GRPOUP=www-data
+GROUP=www-data
+HOME=/var/www
 
 FOSWIKI_ROOT=/var/www/foswiki
 
 FOSWIKI_FCGI=webdav.fcgi
 FOSWIKI_BIND=127.0.0.1:9001
 FOSWIKI_CHILDREN=5
+FOSWIKI_MAX_REQUESTS=-1
+FOSWIKI_MAX_SIZE=300000
+FOSWIKI_CHECK_SIZE=10
 FOSWIKI_PIDFILE=/var/run/$NAME.pid
 FOSWIKI_TRACE=0
 FOSWIKI_FILESYSTEM=Foswiki
@@ -31,28 +35,60 @@ if [ -f /etc/default/$NAME ] ; then
     . /etc/default/$NAME
 fi
 
+if [ ! -d $FOSWIKI_ROOT ]; then
+    exit
+fi
+
+cd $HOME || exit 3
+
+export HOME
+
+if [ -d $HOME/.plenv ]; then
+  export PATH="$HOME/.plenv/bin:$PATH"
+  eval "$(plenv init -)"
+fi
+
+if [ -d $HOME/local/lib ]; then
+  export LD_LIBRARY_PATH=$HOME/local/lib
+fi
+
 FOSWIKI_DAEMON=$FOSWIKI_ROOT/tools/$FOSWIKI_FCGI
-FOSWIKI_DAEMON_OPTS="-n $FOSWIKI_CHILDREN -l $FOSWIKI_BIND -p $FOSWIKI_PIDFILE -d -q -t $FOSWIKI_TRACE -fs $FOSWIKI_FILESYSTEM"
+FOSWIKI_DAEMON_OPTS="-n $FOSWIKI_CHILDREN -l $FOSWIKI_BIND -p $FOSWIKI_PIDFILE -d -q -t $FOSWIKI_TRACE -fs $FOSWIKI_FILESYSTEM -c $FOSWIKI_CHECK_SIZE -x $FOSWIKI_MAX_REQUESTS -s $FOSWIKI_MAX_SIZE"
 
 start() {
         log_daemon_msg "Starting $DESC" $NAME
-	:> $FOSWIKI_PIDFILE
-	chown $USER:$GROUP $FOSWIKI_PIDFILE
-        if ! start-stop-daemon --start --oknodo --quiet \
-	    --chuid $USER:$GROUP \
-	    --chdir $FOSWIKI_ROOT/bin \
-            --pidfile $FOSWIKI_PIDFILE \
-	    --exec $FOSWIKI_DAEMON -- $FOSWIKI_DAEMON_OPTS
+        if test -f $FOSWIKI_PIDFILE; then
+          log_failure_msg "There's a $DESC already running."
+	else 
+	  :> $FOSWIKI_PIDFILE
+	  chown $USER:$GROUP $FOSWIKI_PIDFILE
+	  if ! start-stop-daemon --start --oknodo --quiet \
+	      --chuid $USER:$GROUP \
+	      --chdir $FOSWIKI_ROOT/bin \
+	      --pidfile $FOSWIKI_PIDFILE \
+	      --exec $FOSWIKI_DAEMON -- $FOSWIKI_DAEMON_OPTS
+	  then
+	      log_end_msg 1
+	  else
+	      log_end_msg 0
+	  fi
+	fi
+}
+
+force_stop() {
+        log_daemon_msg "Killing $DESC" $NAME
+        if start-stop-daemon --stop --signal KILL --retry 30 --oknodo --quiet --pidfile $FOSWIKI_PIDFILE 
         then
-            log_end_msg 1
-        else
+            rm -f $FOSWIKI_PIDFILE
             log_end_msg 0
+        else
+            log_end_msg 1
         fi
 }
 
 stop() {
         log_daemon_msg "Stopping $DESC" $NAME
-        if start-stop-daemon --stop --retry 30 --oknodo --quiet --pidfile $FOSWIKI_PIDFILE 
+        if start-stop-daemon --stop --signal TERM --retry 30 --oknodo --quiet --pidfile $FOSWIKI_PIDFILE 
         then
             rm -f $FOSWIKI_PIDFILE
             log_end_msg 0
@@ -84,6 +120,9 @@ case "$1" in
   stop)
     stop
     ;;
+  force-stop)
+    force_stop
+    ;;
   reload) 
     reload
     ;;
@@ -95,7 +134,7 @@ case "$1" in
     status
     ;;
   *)
-    echo "Usage: $NAME {start|stop|restart|reload|status}"
+    echo "Usage: $NAME {start|stop|force-stop|restart|reload|status}"
     exit 1
     ;;
 esac

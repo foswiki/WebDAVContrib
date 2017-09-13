@@ -1,0 +1,60 @@
+# SystemD start file for Foswiki
+#
+# Note that you need to replace the path in 'WorkingDirectory' 
+# to suite your needs if you don't use the default path
+# as there is no variable substitution possible for that setting
+
+[Unit]
+Description=Foswiki WebDAV
+
+[Service]
+Environment=FOSWIKI_ROOT=/var/www/foswiki
+Environment=FOSWIKI_FCGI=webdav.fcgi
+Environment=FOSWIKI_BIND=127.0.0.1:9002
+Environment=FOSWIKI_CHILDREN=3
+Environment=FOSWIKI_MAX_REQUESTS=-1
+Environment=FOSWIKI_MAX_SIZE=300000
+Environment=FOSWIKI_CHECK_SIZE=10
+Environment=FOSWIKI_TRACE=0
+Environment=FOSWIKI_FILESYSTEM=Foswiki
+
+
+# Optional, overrides settings above
+EnvironmentFile=-/etc/default/foswiki-dav
+
+# The User, Group, PIDFile and WorkingDirectory  cannot be specified by Environment variables. Update as needed.
+# Typical settings:
+#  RedHat, Fedora, CentOS, Gentoo, Mandriva USER=apache   GROUP=apache
+#  debian, Ubuntu, Kubuntu                  USER=www-data GROUP=www-data
+#  Suse:                                    USER=wwwrun   GROUP=www
+#  FreeBSD:                                 USER=www      GROUP=wwwadmin
+User=www-data
+Group=www-data
+
+# If changing pidfile,  be sure to also update the -p argument on the ExecStart command
+# The PIDFile directory must exist and  be writable by the User:Group specified above
+PIDFile=/var/www/foswiki/working/foswiki-dav.pid
+#PIDFile=/var/run/foswiki/foswiki-dav.pid         # conventional location
+
+# Doesn't seem to support variable substitution. Should be ${FOSWIKI_ROOT}/bin/
+WorkingDirectory=/var/www/foswiki/bin/
+
+# Starts foswiki fcgi service
+ExecStart=/usr/bin/perl ${FOSWIKI_ROOT}/tools/${FOSWIKI_FCGI} \
+        -n $FOSWIKI_CHILDREN \
+        -l $FOSWIKI_BIND \
+        -c $FOSWIKI_CHECK_SIZE \
+        -x $FOSWIKI_MAX_REQUESTS \
+        -s $FOSWIKI_MAX_SIZE \
+	-t $FOSWIKI_TRACE \
+	-fs ${FOSWIKI_FILESYSTEM}  \
+        -p $FOSWIKI_ROOT/working/foswiki-dav.pid \
+        -d -q
+
+
+Type=forking
+Restart=always
+SyslogIdentifier=foswiki-dav
+
+[Install]
+WantedBy=multi-user.target

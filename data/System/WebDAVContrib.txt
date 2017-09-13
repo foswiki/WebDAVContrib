@@ -103,7 +103,7 @@ Another great Foswiki extension from the <a style="text-decoration:none" href="h
 
 Many thanks to the following sponsors for supporting this work:
    * [[http://Kontextwork.de][KontextWork]]
-   * [[http://www.fu-berlin.de/][Freie Universität Berlin]]
+   * [[http://www.fu-berlin.de/][Freie Universit&auml;t Berlin]]
 
 
 ---++ Change History
