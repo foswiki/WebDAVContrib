@@ -109,6 +109,7 @@ Many thanks to the following sponsors for supporting this work:
 ---++ Change History
 
 %TABLE{columnwidths="7em" tablewidth="100%"}%
+|  13 Sep 2017: | Foswikitask:Item14476 - improve init scripts; added systemd service
 |  11 Jul 2016: | Foswikitask:Item13571 - fixed compatibility with Foswiki-2 | 
 |  08 Mar 2016: | Foswikitask:Item14018 - fixed Can't locate object method "LastCall" via package "HTTP::Headers" (Foswiki:Main.FlorianSchlichting); \
                   Foswikitask:Item13799 - fails to connect network drive on Windows 7 (Foswiki:Main.FlorianSchlichting) |
