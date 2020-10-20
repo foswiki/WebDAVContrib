@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="" date="1468227008" format="1.1" version="1"}%
+%META:TOPICINFO{author="ProjectContributor" comment="" date="1520435552" format="1.1" version="1"}%
 ---+ Configuring WebDAVContrib with Apache2 and mod_perl
 <!--
    * Set CONFHOST = %URLPARAM{"confhosth" default="%HTTP_HOST%"}%
@@ -6,7 +6,7 @@
    * Set CONFURL = %URLPARAM{"confurl" default="/dav"}%
 -->
 If your site is already running on Apache2 with mod_perl2, then the simplest
-way to configure WebDAV is to use the same Apache server. If you are using
+way to configure <nop>WebDAV is to use the same Apache server. If you are using
 =mod_fcgid=, see ConfiguringWebDAVContribWithFCGI.
 
 ---++ Configuration Wizard
@@ -187,5 +187,4 @@ SSL (with https: URLs).
 If you are having problems with !WebDAV you can enable tracing in the Apache
 handler and the file system interface using the =FoswikiDebug= Apache
 directive. See WebDAVContrib#Debugging for more information.
-
 

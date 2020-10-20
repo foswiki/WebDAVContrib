@@ -1,6 +1,6 @@
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          foswiki
+# Provides:          foswiki-dav
 # Required-Start:    $syslog $remote_fs $network
 # Required-Stop:     $syslog $remote_fs $network
 # Should-Start:      fam

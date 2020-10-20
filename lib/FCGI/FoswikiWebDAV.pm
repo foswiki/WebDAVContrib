@@ -62,7 +62,9 @@ sub run {
     if ( $this->{listen} ) {
 
         $this->fork() if $this->{detach};
-        eval "use " . $this->{manager} . "; 1";
+        my $path = $this->{manager} . '.pm';
+        $path =~ s/::/\//g;
+        eval { require $path };
         unless ($@) {
             $manager = $this->{manager}->new(
                 {
@@ -90,11 +92,19 @@ sub run {
         $this->daemonize() if $this->{detach};
     }
 
-    my $localSiteCfg = $INC{'LocalSite.cfg'};
-    die "LocalSite.cfg is not loaded - Check permissions or run configure\n"
-      unless defined $localSiteCfg;
+    my $localSiteCfg;
+    my $lastMTime = 0;
+    my $mtime     = 0;
 
-    my $lastMTime = ( stat $localSiteCfg )[9];
+    if ( !defined $Foswiki::cfg{FastCGIContrib}{CheckLocalSiteCfg}
+        || $Foswiki::cfg{FastCGIContrib}{CheckLocalSiteCfg} )
+    {
+
+        $localSiteCfg = $INC{'LocalSite.cfg'};
+        if ( defined $localSiteCfg ) {
+            $lastMTime = ( stat $localSiteCfg )[9];
+        }
+    }
 
     while ( $r->Accept() >= 0 ) {
         $manager && $manager->pm_pre_dispatch();
@@ -141,7 +151,8 @@ sub run {
         print $rs;
 
         # check lifetime conditions
-        my $mtime = ( stat $localSiteCfg )[9];
+        $mtime = ( stat $localSiteCfg )[9] if $localSiteCfg;
+
         if ( $mtime > $lastMTime || $this->{hupRecieved} ) {
             $r->LastCall();
             if ($manager) {
@@ -216,9 +227,9 @@ sub fork () {
 sub daemonize {
     umask(0);
     chdir File::Spec->rootdir;
-    open STDIN,  File::Spec->devnull or die $!;
-    open STDOUT, ">&STDIN"           or die $!;
-    open STDERR, ">&STDIN"           or die $!;
+    open STDIN,  "<",  File::Spec->devnull or die $!;
+    open STDOUT, ">&", STDIN               or die $!;
+    open STDERR, ">&", STDIN               or die $!;
     POSIX::setsid();
 }
 
@@ -226,6 +237,7 @@ sub daemonize {
 __END__
 
 Copyright (C) 2013-2015 WikiRing http://wikiring.com
+Copyright (C) 2015-2020 Foswiki Contributors
 
 This program is licensed to you under the terms of the GNU General
 Public License, version 2. It is distributed in the hope that it will

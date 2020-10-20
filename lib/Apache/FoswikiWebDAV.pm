@@ -1,11 +1,12 @@
 # See bottom of file for license, copyright, and documentation
 package Apache::FoswikiWebDAV;
-our @ISA = ('HTTP::WebDAV');
-
-# WebDAV server using mod_perl
 
 use strict;
 use warnings;
+
+our @ISA = ('HTTP::WebDAV');
+
+# WebDAV server using mod_perl
 
 # Pull in base class
 use HTTP::WebDAV ();
@@ -13,8 +14,8 @@ use HTTP::WebDAV ();
 our $VERSION = '3.0.0';
 
 use Apache2::Directive ();
-use Apache2::Const ();
-use APR::UUID ();
+use Apache2::Const     ();
+use APR::UUID          ();
 
 # Constructor
 sub new {
@@ -44,8 +45,11 @@ sub getFilesys {
     my ( $this, $uri, $request ) = @_;
 
     my $module = $this->{module};
-    eval "require $module" || die $@;
+    my $path   = $module . '.pm';
+    $path =~ s/::/\//g;
+    eval { require $path } || die $@;
     my $webServerHandledAuth = $request->{rr}->some_auth_required();
+
     #print STDERR "Construct filesys ".($webServerHandledAuth||0)."\n";
     return $module->new(
         {
@@ -161,7 +165,8 @@ sub content {
 }
 
 sub auth_failed {
-    my ($this, $response) = @_;
+    my ( $this, $response ) = @_;
+
 #    $response->header( 'WWW-Authenticate' => "Basic realm=\"$this->{realm}\"" );
 }
 
@@ -191,6 +196,7 @@ sub content {
 __END__
 
 Copyright (C) 2008-2015 WikiRing http://wikiring.com
+Copyright (C) 2015-2020 Foswiki Contributors
 
 This program is licensed to you under the terms of the GNU General
 Public License, version 2. It is distributed in the hope that it will

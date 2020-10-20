@@ -1,6 +1,5 @@
-%META:TOPICINFO{author="ProjectContributor" comment="" date="1468227008" format="1.1"  version="1"}%
+%META:TOPICINFO{author="ProjectContributor" comment="" date="1520435552" format="1.1" version="1"}%
 %META:TOPICPARENT{name="WebDAVContrib"}%
-
 ---+ Configuring !WebDAVContrib with FCGI
 
 %TOC%
@@ -14,7 +13,7 @@ be used with any web server that supports FCGI. The following examples
 show it being used with Lighttpd, Nginx and Apache. Note that these
 are generic examples, and will require customisation for your site.
 
-Note that the default configuration of the WebDAV FCGI module uses
+Note that the default configuration of the <nop>WebDAV FCGI module uses
 !BasicAuth to obtain authentication information about the user. For
 this reason it is important that you configure your !WebDAV service
 to use SSL. However configuration of SSL is beyond the scope of this guide.

@@ -17,6 +17,7 @@ Environment=FOSWIKI_MAX_SIZE=300000
 Environment=FOSWIKI_CHECK_SIZE=10
 Environment=FOSWIKI_TRACE=0
 Environment=FOSWIKI_FILESYSTEM=Foswiki
+Environment=FOSWIKI_LOCATION=/dav
 
 
 # Optional, overrides settings above
@@ -48,7 +49,8 @@ ExecStart=/usr/bin/perl ${FOSWIKI_ROOT}/tools/${FOSWIKI_FCGI} \
         -s $FOSWIKI_MAX_SIZE \
 	-t $FOSWIKI_TRACE \
 	-fs ${FOSWIKI_FILESYSTEM}  \
-        -p $FOSWIKI_ROOT/working/foswiki-dav.pid \
+        -p ${FOSWIKI_ROOT}/working/foswiki-dav.pid \
+        --location $FOSWIKI_LOCATION \
         -d -q
 
 

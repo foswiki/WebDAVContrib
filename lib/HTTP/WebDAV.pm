@@ -317,14 +317,14 @@ sub COPY {
 
     # Find source files that we have to copy
     my @files =
-      map { s|/+|/|g; $_ }    # simplify // to /
+      map { my $tmp = $_; $tmp =~ s|/+|/|g; $tmp }    # simplify // to /
       File::Find::Rule::Filesys::Virtual->virtual($filesys)
       ->file->maxdepth($depth)->in($path);
 
     # Find source directories that we have to copy
     my @dirs = reverse sort
-      map { s|/+|/|g; $_ }    # simplify // to /
-      grep { $_ !~ m|/\.\.?$| }    # exclude /. and /..
+      map { my $tmp = $_; $tmp =~ s|/+|/|g; $tmp }    # simplify // to /
+      grep { $_ !~ m|/\.\.?$| }                       # exclude /. and /..
       File::Find::Rule::Filesys::Virtual->virtual($filesys)
       ->directory->maxdepth($depth)->in($path);
 
@@ -429,7 +429,7 @@ sub _DELETE {
     # specified path recursively.
     my @files =
       grep { $_ !~ m|/\.\.?$| }    # Filter . and ..
-      map { s|/+|/|g; $_ }         # Simplify // to /
+      map { my $tmp = $_; $tmp =~ s|/+|/|g; $tmp }    # Simplify // to /
       File::Find::Rule::Filesys::Virtual->virtual($filesys)->in($path), $path;
 
     _trace( "Deleting ($path) = " . join( "\n", @files ) ) if T_ACTION;
@@ -695,7 +695,7 @@ sub MOVE {
 
         if ( $filesys->test( 'd', $path ) ) {
             my @files =
-              map { s|/+|/|g; $_ }
+              map { my $tmp = $_; $tmp =~ s|/+|/|g; $tmp }
               grep { $_ !~ m|/\.\.?$| }
               File::Find::Rule::Filesys::Virtual->virtual($filesys)->in($path),
               $path;
@@ -892,8 +892,13 @@ sub PROPFIND {
             # names of all properties on this resource, live and dead
 
             # live properties defined in this module
-            no strict 'refs';
-            %want = map { s/_prop_//; s/_/-/g; ( $_ => 1 ) }
+            no strict 'refs';    ## no critic
+            %want = map {
+                my $tmp = $_;
+                $tmp =~ s/_prop_//;
+                $tmp =~ s/_/-/g;
+                ( $tmp => 1 )
+              }
               grep { /^_prop_/ && defined &$_ }
               keys %{ __PACKAGE__ . '::' };
             use strict 'refs';
@@ -1220,7 +1225,11 @@ sub UNLOCK {
     }
     _trace( 'Error: Could not remove lock', $locktoken, 'on', $path )
       if T_ERROR;
-    return HTTP_FORBIDDEN;
+
+    ## ignore error
+    # return HTTP_FORBIDDEN;
+
+    return HTTP_NO_CONTENT;
 }
 
 =begin TML
@@ -1245,7 +1254,9 @@ sub getFilesys {
     my $module;
 
     $module = $this->{filesys};
-    eval "require $module" || die $@;
+    my $path = $module . '.pm';
+    $path =~ s/::/\//g;
+    eval { require $path } || die $@;
 
     return $module->new(
         {
@@ -1320,7 +1331,7 @@ sub _trace {
         }
     }
     my $mess = Encode::encode( "utf-8", join( ' ', @data ) );
-    binmode( STDERR, ":utf8" );
+    binmode( STDERR, ":encoding(UTF-8)" );
 
     # Print to webserver log
     print STDERR 'WD@' . time . ": $mess\n";
@@ -1749,7 +1760,7 @@ sub _xml_find_props {
             my $fn = '_prop_' . lc($1);
             $fn =~ s/-/_/g;
             if ( defined &$fn ) {
-                no strict 'refs';
+                no strict 'refs';    ## no critics
                 unless ( &$fn( $datum, $path ) ) {
 
                     # A zero status from the _prop_ function signals
@@ -1868,9 +1879,14 @@ sub _prop_ishidden {
 #
 # Since we want to use the filesystem-provided identifier for all
 # resources, we don't implement this.
+
+
 sub _prop_displayname {
     my ($datum, $path) = @_;
-    $datum->appendText( $path ); # wild stab in the dark
+
+    $datum->appendText( $path ); 
+
+    return 1;
 }
 
 =cut
@@ -2116,7 +2132,7 @@ sub _emitBody {
 sub _deduceMimeType {
     my ($path) = @_;
 
-    return undef unless ( $path =~ /\.([^.]*)$/ );
+    return unless ( $path =~ /\.([^.]*)$/ );
     my $ext = $1;
     unless ( scalar keys %mimeTypes ) {
         my $f;
@@ -2156,6 +2172,7 @@ sub _unlink {
 __END__
 
 Copyright (C) 2008-2015 WikiRing http://wikiring.com
+Copyright (C) 2015-2020 Foswiki Contributors
 
 This program is licensed to you under the terms of the GNU General
 Public License, version 2. It is distributed in the hope that it will

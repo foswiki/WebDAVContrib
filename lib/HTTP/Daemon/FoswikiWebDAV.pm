@@ -1,5 +1,9 @@
 # See bottom of file for license, copyright, and documentation
 package HTTP::Daemon::FoswikiWebDAV;
+
+use strict;
+use warnings;
+
 our @ISA = ('HTTP::WebDAV');
 
 =begin TML
@@ -12,9 +16,6 @@ has a very small footprint.
 This is called from tools/http_daemon.pl
 
 =cut
-
-use strict;
-use warnings;
 
 our $VERSION = '3.0.0';
 
@@ -98,6 +99,7 @@ sub getMimeTypesFile {
 __END__
 
 Copyright (C) 2008-2015 WikiRing http://wikiring.com
+Copyright (C) 2015-2020 Foswiki Contributors
 
 This program is licensed to you under the terms of the GNU General
 Public License, version 2. It is distributed in the hope that it will

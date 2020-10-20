@@ -1,4 +1,4 @@
-%META:TOPICINFO{author="ProjectContributor" comment="" date="1468227008" format="1.1" version="1"}%
+%META:TOPICINFO{author="ProjectContributor" comment="" date="1520435552" format="1.1" version="1"}%
 ---+!! !WebDAVContrib
 <img src="http://webdav.org/images/webdav-logo.jpg" style="float:right">
 %FORMFIELD{"Description"}%
@@ -59,16 +59,19 @@ debugging is a network protocol analyser, such as
 [[http://www.wireshark.org][wireshark]].
 
 ---+++ Configuring !FilesysVirtualPlugin
+
 Refer to the documentation for FilesysVirtualPlugin for information on
 configuring it to support different data views. Each data view presents
 topics as a different file type, allowing you to read and write the same
 topic in a range of different formats.
 
 ---++ Clients
+
 There are many DAV clients out there that it would be impossible to describe
 them all.
 
 ---+++ Linking to DAV resources from a web browser
+
 To link to a DAV resource from a web browser, all you have to do is link to
 the DAV url of the resource. However most browsers will open the link
 in a "read only" mode. If you want to open DAV resources from Firefox
@@ -99,7 +102,6 @@ run them.
 This software is released under the GNU Public License, version 2.
 
 ---++ Info
-Another great Foswiki extension from the <a style="text-decoration:none" href="http://wikiring.com"><img src="%ATTACHURLPATH%/wikiringlogo20x20.png" alt="" /> *WikiRing* </a> - working together to improve your wiki experience!
 
 Many thanks to the following sponsors for supporting this work:
    * [[http://Kontextwork.de][KontextWork]]
@@ -109,7 +111,10 @@ Many thanks to the following sponsors for supporting this work:
 ---++ Change History
 
 %TABLE{columnwidths="7em" tablewidth="100%"}%
-|  13 Sep 2017: | Foswikitask:Item14476 - improve init scripts; added systemd service
+|  20 Oct 2020: | Foswikitask:Item14476 - fix init scripts; add systemd service; \
+                  Foswikitask:Item14961 - respect ={FastCGIContrib}{CheckLocalSiteCfg}= setting; adjusting a couple of problems reported by perlcritique; \
+                  Foswikitask:Item14962 - ignore unlocking failures |
+|  13 Sep 2017: | Foswikitask:Item14476 - improve init scripts; added systemd service |
 |  11 Jul 2016: | Foswikitask:Item13571 - fixed compatibility with Foswiki-2 | 
 |  08 Mar 2016: | Foswikitask:Item14018 - fixed Can't locate object method "LastCall" via package "HTTP::Headers" (Foswiki:Main.FlorianSchlichting); \
                   Foswikitask:Item13799 - fails to connect network drive on Windows 7 (Foswiki:Main.FlorianSchlichting) |
@@ -118,19 +123,11 @@ Many thanks to the following sponsors for supporting this work:
 
 %META:FORM{name="PackageForm"}%
 %META:FIELD{name="Author" title="Author" value="Crawford Currie http://c-dot.co.uk"}%
-%META:FIELD{name="Compatibility" attributes="" title="[[Compatibility]]" value=""}%
-%META:FIELD{name="Copyright" title="Copyright" value="&copy; 2008 !KontextWork.de, &copy; 2008-2015 Crawford Currie http://c-dot.co.uk"}%
-%META:FIELD{name="DemoUrl" title="DemoUrl" value="http://"}%
+%META:FIELD{name="Version" title="Version" value="%25$VERSION%25"}%
+%META:FIELD{name="Release" title="Release" value="%25$RELEASE%25"}%
 %META:FIELD{name="Description" title="Description" value="%25$SHORTDESCRIPTION%25"}%
-%META:FIELD{name="ExtensionClassification" title="ExtensionClassification" value="Data and Files, User interactivity"}%
-%META:FIELD{name="ExtensionType" title="ExtensionType" value="PluginPackage"}%
-%META:FIELD{name="Home" title="Home" value="https://foswiki.org/Extensions/WebDAVContrib"}%
-%META:FIELD{name="ImageUrl" attributes="" title="ImageUrl" value=""}%
-%META:FIELD{name="License" title="License" value="[[http://www.gnu.org/licenses/old-licenses/gpl-2.0.html][GPL2 (Gnu General Public License v2)]]"}%
-%META:FIELD{name="ModificationPolicy" title="ModificationPolicy" value="CoordinateWithAuthor"}%
-%META:FIELD{name="NewsFlash" attributes="" title="NewsFlash" value=""}%
-%META:FIELD{name="Release" title="Release" value="%$RELEASE%"}%
 %META:FIELD{name="Repository" title="Repository" value="https://github.com/foswiki/WebDAVContrib"}%
+%META:FIELD{name="Copyright" title="Copyright" value="&copy; 2008 !KontextWork.de, &copy; 2008-2015 Crawford Currie http://c-dot.co.uk; 2015-2020 Foswiki Contributors"}%
+%META:FIELD{name="License" title="License" value="[[http://www.gnu.org/licenses/old-licenses/gpl-2.0.html][GPL2 (Gnu General Public License v2)]]"}%
+%META:FIELD{name="Home" title="Home" value="https://foswiki.org/Extensions/WebDAVContrib"}%
 %META:FIELD{name="Support" title="Support" value="https://foswiki.org/Support/WebDAVContrib"}%
-%META:FIELD{name="SupportUrl" title="SupportUrl" value="Support.%25TOPIC%25"}%
-%META:FIELD{name="Version" title="Version" value="%$VERSION%"}%

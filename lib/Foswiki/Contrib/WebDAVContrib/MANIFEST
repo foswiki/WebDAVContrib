@@ -1,24 +1,25 @@
-# Release manifest for WebDAVContrib
 !noci
-data/System/ConfiguringWebDAVContribWithApache.txt 0644 Documentation
-data/System/ConfiguringWebDAVContribWithFCGI.txt 0644 Documentation
-data/System/ConfiguringWebDAVContribWithHTTPDaemon.txt 0644 Documentation
-data/System/WebDAVAndWindowsClient.txt 0644 Documentation
-data/System/WebDAVContrib.txt 0644 Documentation
-data/System/WebDAVContribLitmusTests.txt 0644 Documentation
-lib/Apache/FoswikiDAVHandler.pm 0644 Interface to apache
-lib/Apache/FoswikiWebDAV.pm 0644 Apache handler
+data/System/ConfiguringWebDAVContribWithApache.txt 0644
+data/System/ConfiguringWebDAVContribWithFCGI.txt 0644
+data/System/ConfiguringWebDAVContribWithHTTPDaemon.txt 0644
+data/System/WebDAVAndWindowsClient.txt 0644
+data/System/WebDAVContribLitmusTests.txt 0644
+data/System/WebDAVContrib.txt 0644
+lib/Apache/FoswikiDAVHandler.pm 0644
+lib/Apache/FoswikiWebDAV.pm 0644
 lib/FCGI/FoswikiWebDAV.pm 0644
 lib/FCGI/FoswikiWebDAVProcManager.pm 0644
 lib/FCGI/VirtualHostingFoswikiWebDAV.pm 0644
-lib/Foswiki/Contrib/WebDAVContrib.pm 0644 Package module
+lib/Foswiki/Contrib/WebDAVContrib/DEPENDENCIES 0644
+lib/Foswiki/Contrib/WebDAVContrib.pm 0644
 lib/HTTP/BasicAuth.pm 0644
 lib/HTTP/Daemon/FoswikiWebDAV.pm 0644
-lib/HTTP/WebDAV.pm 0644 Generic WebDAV request handler
+lib/HTTP/WebDAV.pm 0644
+pub/System/WebDAVContrib/Frühling.odt 0644
 pub/System/WebDAVContrib/vhost.conf 0644
-pub/System/WebDAVContrib/wikiringlogo20x20.png 0644 Graphic
-tools/http_daemon.pl 0755 Stand-alone web server
-tools/webdav.fcgi 0755 FCGI daemon script
-tools/virtualhosts-webdav.fcgi 0755 FCGI daemon script
+tools/foswiki-dav.defaults 0755
 tools/foswiki-dav.init-script 0755
+tools/http_daemon.pl 0755
 tools/systemd/foswiki-dav.service 0755
+tools/virtualhosts-webdav.fcgi 0755
+tools/webdav.fcgi 0755
