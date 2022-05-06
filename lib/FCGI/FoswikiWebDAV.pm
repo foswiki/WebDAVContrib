@@ -15,10 +15,10 @@ This is called from tools/webdav.fcgi
 
 use FCGI;
 use POSIX qw(:signal_h);
-use HTTP::WebDAV    ();
-use HTTP::BasicAuth ();
-use Foswiki         ();
-use Cwd             ();
+use HTTP::WebDAV     ();
+use HTTP::WebDAVAuth ();
+use Foswiki          ();
+use Cwd              ();
 
 our $VERSION = '1.0.0';
 
@@ -26,9 +26,9 @@ sub new {
     my ( $class, %args ) = @_;
     my $this = $class->SUPER::new(%args);
 
-    $this->{manager}     ||= 'FCGI::FoswikiWebDAVProcManager';
-    $this->{nproc}       ||= 1;
-    $this->{maxRequests} ||= 100;
+    $this->{manager} ||= 'FCGI::FoswikiWebDAVProcManager';
+    $this->{nproc}   ||= 1;
+    $this->{maxRequests} //= 100;
     $this->{sock}                 = 0;
     $this->{hupRecieved}          = 0;
     $this->{removeStatusLine}     = $args{removeStatusLine};
@@ -71,8 +71,8 @@ sub run {
                     client                 => $this,
                     n_processes            => $this->{nproc},
                     pid_fname              => $this->{pidfile},
-                    max_size               => $this->{maxRequests},
-                    max_requests           => $this->{maxSize},
+                    max_size               => $this->{maxSize},
+                    max_requests           => $this->{maxRequests},
                     sizecheck_num_requests => $this->{sizecheckNumRequests},
                     quiet                  => $this->{quiet}
                 }
@@ -136,7 +136,7 @@ sub run {
         $response->protocol('HTTP/1.1');
         my $status =
           $this->handleRequest( $request, $response,
-            new HTTP::BasicAuth( $request, $this->{realm} ) );
+            new HTTP::WebDAVAuth( $request, $this->{realm} ) );
 
         # FCGI isn't happy with just the status line; it needs the
         # header field as well.
@@ -237,7 +237,7 @@ sub daemonize {
 __END__
 
 Copyright (C) 2013-2015 WikiRing http://wikiring.com
-Copyright (C) 2015-2020 Foswiki Contributors
+Copyright (C) 2015-2022 Foswiki Contributors
 
 This program is licensed to you under the terms of the GNU General
 Public License, version 2. It is distributed in the hope that it will

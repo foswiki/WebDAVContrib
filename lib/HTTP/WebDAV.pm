@@ -738,9 +738,11 @@ sub OPTIONS {
 
     $response->header(
         'Allow' => join( ',', grep { $this->can($_) } @METHODS ) );
-    $response->header( 'DAV' => '1,2,<http://apache.org/dav/propset/fs/1>' );
-    $response->header( 'MS-Author-Via' => 'DAV' );
-    $response->header( 'Keep-Alive'    => 'timeout=15, max=96' );
+    $response->header( 'DAV' => '1,2' )
+      ;    #,<http://apache.org/dav/propset/fs/1>' );
+    $response->header( 'MS-Author-Via'  => 'DAV' );
+    $response->header( 'Keep-Alive'     => 'timeout=15, max=96' );
+    $response->header( 'Content-Length' => '0' );
 
     return HTTP_OK;
 }
@@ -1881,10 +1883,12 @@ sub _prop_ishidden {
 # resources, we don't implement this.
 
 
+
 sub _prop_displayname {
     my ($datum, $path) = @_;
 
-    $datum->appendText( $path ); 
+    my $displayName = $filesys->displayName($path) // 'undef';
+    #print STDERR "called _prop_displayname($datum, $path)=$displayName\n";
 
     return 1;
 }
@@ -1898,10 +1902,14 @@ sub _prop_displayname {
 # on a GET.
 #
 # Since we don't return this header on a GET, it doesn't have to be provided as a property.
+
 sub _prop_getcontentlanguage {
     my ($datum, $path) = @_;
-}
 
+    #print STDERR "called _prop_getcontentlanguage($datum, $path)\n";
+
+  return 1;
+}
 =cut
 
 sub _prop_getcontentlength {
@@ -1917,7 +1925,7 @@ sub _prop_getcontenttype {
         $datum->appendText('httpd/unix-directory');
     }
     else {
-        my $type = _deduceMimeType($path) || 'application/octet-stream';
+        my $type = _deduceMimeType($path);
         $datum->appendText($type);
     }
     return 1;
@@ -2116,7 +2124,11 @@ sub _emitBody {
 
         # Convert perl strings to UTF-8 bytes.
         utf8::encode($string);
-        $type .= '; charset="utf-8"';
+        $type .= '; charset=utf-8';
+    }
+    else {
+        $type .= '; charset=utf-8'
+          if $type =~ /^(text\/.*|application\/(json|x\-perl))$/;
     }
 
     $response->header( 'Content-Type' => $type );
@@ -2133,7 +2145,7 @@ sub _deduceMimeType {
     my ($path) = @_;
 
     return unless ( $path =~ /\.([^.]*)$/ );
-    my $ext = $1;
+    my $ext = lc($1);
     unless ( scalar keys %mimeTypes ) {
         my $f;
         open( $f, '<', $typesConfig ) || return $!;
@@ -2149,7 +2161,7 @@ sub _deduceMimeType {
         }
         close($f);
     }
-    return $mimeTypes{$ext};
+    return $mimeTypes{$ext} // 'application/octet-stream';
 }
 
 # Unlink file or dir
@@ -2172,7 +2184,7 @@ sub _unlink {
 __END__
 
 Copyright (C) 2008-2015 WikiRing http://wikiring.com
-Copyright (C) 2015-2020 Foswiki Contributors
+Copyright (C) 2015-2022 Foswiki Contributors
 
 This program is licensed to you under the terms of the GNU General
 Public License, version 2. It is distributed in the hope that it will

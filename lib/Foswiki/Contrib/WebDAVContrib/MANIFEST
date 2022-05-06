@@ -14,6 +14,7 @@ lib/Foswiki/Contrib/WebDAVContrib/DEPENDENCIES 0644
 lib/Foswiki/Contrib/WebDAVContrib.pm 0644
 lib/HTTP/BasicAuth.pm 0644
 lib/HTTP/Daemon/FoswikiWebDAV.pm 0644
+lib/HTTP/WebDAVAuth.pm 0644
 lib/HTTP/WebDAV.pm 0644
 tools/foswiki-dav.defaults 0755
 tools/foswiki-dav.init-script 0755

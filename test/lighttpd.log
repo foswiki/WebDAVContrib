@@ -1,8 +1,0 @@
-2013-10-02 15:31:55: (log.c.166) server started 
-2013-10-02 15:33:15: (server.c.1512) server stopped by UID = 0 PID = 27030 
-2013-10-02 15:33:20: (log.c.166) server started 
-2013-10-02 15:34:25: (server.c.1396) [note] graceful shutdown started 
-2013-10-02 15:34:25: (server.c.1512) server stopped by UID = 0 PID = 0 
-2013-10-02 15:35:53: (log.c.166) server started 
-2013-10-02 15:38:19: (server.c.1396) [note] graceful shutdown started 
-2013-10-02 15:38:19: (server.c.1512) server stopped by UID = 0 PID = 0 

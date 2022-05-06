@@ -196,7 +196,7 @@ sub content {
 __END__
 
 Copyright (C) 2008-2015 WikiRing http://wikiring.com
-Copyright (C) 2015-2020 Foswiki Contributors
+Copyright (C) 2015-2022 Foswiki Contributors
 
 This program is licensed to you under the terms of the GNU General
 Public License, version 2. It is distributed in the hope that it will

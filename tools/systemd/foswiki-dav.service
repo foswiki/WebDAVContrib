@@ -23,7 +23,7 @@ Environment=FOSWIKI_LOCATION=/dav
 # Optional, overrides settings above
 EnvironmentFile=-/etc/default/foswiki-dav
 
-# The User, Group, PIDFile and WorkingDirectory  cannot be specified by Environment variables. Update as needed.
+# The User, Group and WorkingDirectory  cannot be specified by Environment variables. Update as needed.
 # Typical settings:
 #  RedHat, Fedora, CentOS, Gentoo, Mandriva USER=apache   GROUP=apache
 #  debian, Ubuntu, Kubuntu                  USER=www-data GROUP=www-data
@@ -31,11 +31,6 @@ EnvironmentFile=-/etc/default/foswiki-dav
 #  FreeBSD:                                 USER=www      GROUP=wwwadmin
 User=www-data
 Group=www-data
-
-# If changing pidfile,  be sure to also update the -p argument on the ExecStart command
-# The PIDFile directory must exist and  be writable by the User:Group specified above
-PIDFile=/var/www/foswiki/working/foswiki-dav.pid
-#PIDFile=/var/run/foswiki/foswiki-dav.pid         # conventional location
 
 # Doesn't seem to support variable substitution. Should be ${FOSWIKI_ROOT}/bin/
 WorkingDirectory=/var/www/foswiki/bin/
@@ -49,12 +44,10 @@ ExecStart=/usr/bin/perl ${FOSWIKI_ROOT}/tools/${FOSWIKI_FCGI} \
         -s $FOSWIKI_MAX_SIZE \
 	-t $FOSWIKI_TRACE \
 	-fs ${FOSWIKI_FILESYSTEM}  \
-        -p ${FOSWIKI_ROOT}/working/foswiki-dav.pid \
-        --location $FOSWIKI_LOCATION \
-        -d -q
+        --location $FOSWIKI_LOCATION
 
+ExecReload=/bin/kill -HUP $MAINPID
 
-Type=forking
 Restart=always
 SyslogIdentifier=foswiki-dav
 

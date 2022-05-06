@@ -21,9 +21,9 @@ our $VERSION = '3.0.0';
 
 use HTTP::WebDAV ();    # base class
 
-use HTTP::Daemon    ();
-use Foswiki         ();
-use HTTP::BasicAuth ();
+use HTTP::Daemon     ();
+use Foswiki          ();
+use HTTP::WebDAVAuth ();
 use MIME::Base64;
 
 our %mimeTypes;
@@ -80,7 +80,7 @@ sub run {
             my $response = new HTTP::Response();
             my $status =
               $this->handleRequest( $request, $response,
-                new HTTP::BasicAuth( $request, 'Foswiki' ) );
+                new HTTP::WebDAVAuth( $request, 'Foswiki' ) );
             $response->code($status);
             $client->send_response($response);
         }
@@ -99,7 +99,7 @@ sub getMimeTypesFile {
 __END__
 
 Copyright (C) 2008-2015 WikiRing http://wikiring.com
-Copyright (C) 2015-2020 Foswiki Contributors
+Copyright (C) 2015-2022 Foswiki Contributors
 
 This program is licensed to you under the terms of the GNU General
 Public License, version 2. It is distributed in the hope that it will

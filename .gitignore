@@ -6,3 +6,5 @@
 /WebDAVContrib.zip
 /WebDAVContrib_installer
 /WebDAVContrib_installer.pl
+./test/litmus-0.13
+**/*.log

@@ -111,6 +111,10 @@ Many thanks to the following sponsors for supporting this work:
 ---++ Change History
 
 %TABLE{columnwidths="7em" tablewidth="100%"}%
+|  06 May 2022: | Foswikitask:Item15127 - fix processing commandline options; \
+                  fix all unit tests; remove outdated litmus tests from checkin; \
+                  fix systemd startup service; implement a WebDAVAuth class to cover additional authentication methods in addition to basic auth, such as kerberos; \
+                  add support for warmup as in newer FastCGIEngineContrib |
 |  20 Oct 2020: | Foswikitask:Item14476 - fix init scripts; add systemd service; \
                   Foswikitask:Item14961 - respect ={FastCGIContrib}{CheckLocalSiteCfg}= setting; adjusting a couple of problems reported by perlcritique; \
                   Foswikitask:Item14962 - ignore unlocking failures |
@@ -127,7 +131,7 @@ Many thanks to the following sponsors for supporting this work:
 %META:FIELD{name="Release" title="Release" value="%25$RELEASE%25"}%
 %META:FIELD{name="Description" title="Description" value="%25$SHORTDESCRIPTION%25"}%
 %META:FIELD{name="Repository" title="Repository" value="https://github.com/foswiki/WebDAVContrib"}%
-%META:FIELD{name="Copyright" title="Copyright" value="&copy; 2008 !KontextWork.de, &copy; 2008-2015 Crawford Currie http://c-dot.co.uk; 2015-2020 Foswiki Contributors"}%
+%META:FIELD{name="Copyright" title="Copyright" value="&copy; 2008 !KontextWork.de, &copy; 2008-2015 Crawford Currie http://c-dot.co.uk; 2015-2022 Foswiki Contributors"}%
 %META:FIELD{name="License" title="License" value="[[http://www.gnu.org/licenses/old-licenses/gpl-2.0.html][GPL2 (Gnu General Public License v2)]]"}%
 %META:FIELD{name="Home" title="Home" value="https://foswiki.org/Extensions/WebDAVContrib"}%
 %META:FIELD{name="Support" title="Support" value="https://foswiki.org/Support/WebDAVContrib"}%
