@@ -2,7 +2,7 @@
 # Lightweight WebDAV server using FCGI
 #
 # Copyright (C) 2014-2015 C-Dot Consultants http://c-dot.co.uk
-# Copyright (C) 2015-2020 Foswiki Contributors
+# Copyright (C) 2015-2025 Foswiki Contributors
 # 
 # This program is licensed to you under the terms of the GNU General
 # Public License, version 2. It is distributed in the hope that it will

@@ -1,4 +1,4 @@
-# HTTP::WebDAVAuth is Copyright (C) 2015-2022 Foswiki Contributors
+# HTTP::WebDAVAuth is Copyright (C) 2015-2025 Foswiki Contributors
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -26,6 +26,7 @@ use warnings;
 
 use HTTP::Status qw(:constants);
 use MIME::Base64 ();
+use Encode       ();
 
 use constant TRACE => 0;
 our $GSSAPI_ENABLED = 0;
@@ -48,7 +49,7 @@ sub new {
     if ( defined $ENV{REMOTE_USER} && $ENV{REMOTE_USER} ne '' ) {
         $this->{type} = 'remote_user';
 
-        $this->{user} = $ENV{REMOTE_USER};
+        $this->{user} = Encode::decode_utf8( $ENV{REMOTE_USER} );
         $this->{pass} = "";
         writeDebug("...found remote user '$this->{user}'");
     }
@@ -65,6 +66,8 @@ sub new {
             ( $this->{user}, $this->{pass} ) =
               split( ':', MIME::Base64::decode_base64($token), 2 );
 
+            $this->{user} = $this->{user};
+            $this->{pass} = $this->{pass};
             writeDebug("...found basic auth user $this->{user}");
         }
         elsif ( $GSSAPI_ENABLED && $auth =~ /^Negotiate (.*)$/ ) {

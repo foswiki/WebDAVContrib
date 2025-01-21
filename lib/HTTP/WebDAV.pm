@@ -30,13 +30,6 @@ our $outdoc;
 our $typesConfig;
 our %mimeTypes;
 
-our @ISOMONTH = (
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-);
-
-our @WEEKDAY = ( 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' );
-
 # The list of properties in the order a stat() call returns.
 my @STAT_PROPERTIES = qw(dev ino mode nlink uid gid rdev
   getcontentlength atime getlastmodified
@@ -50,8 +43,8 @@ my @METHODS = qw( COPY DELETE GET HEAD MKCOL MOVE OPTIONS POST PROPFIND
 my %default_props = map { ( '{DAV:}' . $_ => 1 ) } (
     'creationdate',
 
-    #'displayname',
     #'getcontentlanguage',
+    'displayname',
     'getcontentlength',
     'getcontenttype',  'getetag',
     'getlastmodified', 'lockdiscovery',
@@ -1882,18 +1875,16 @@ sub _prop_ishidden {
 # Since we want to use the filesystem-provided identifier for all
 # resources, we don't implement this.
 
-
+=cut
 
 sub _prop_displayname {
-    my ($datum, $path) = @_;
+    my ( $datum, $path ) = @_;
 
-    my $displayName = $filesys->displayName($path) // 'undef';
-    #print STDERR "called _prop_displayname($datum, $path)=$displayName\n";
+    my $displayName = $filesys->displayName($path);
+    $datum->appendText($displayName) if defined $displayName;
 
     return 1;
 }
-
-=cut
 
 =begin UNWANTED
 
@@ -1943,7 +1934,7 @@ sub _prop_getetag {
 sub _prop_getlastmodified {
     my ( $datum, $path ) = @_;
     my $stat = _stat($path);
-    $datum->appendText( _formatHTTPTime( $stat->{getlastmodified} || 0 ) );
+    $datum->appendText( _formatISOTime( $stat->{getlastmodified} || 0 ) );
     return 1;
 }
 
@@ -2085,18 +2076,6 @@ sub _formatISOTime {
       . sprintf( '%.2u', $sec ) . "Z";
 }
 
-sub _formatHTTPTime {
-    my $t = shift;
-    my ( $sec, $min, $hour, $day, $mon, $year, $wday, $tz_str ) = gmtime($t);
-    return
-        $WEEKDAY[$wday]
-      . ", $day $ISOMONTH[$mon] "
-      . sprintf( '%.4u', $year + 1900 ) . " "
-      . sprintf( '%.2u', $hour ) . ":"
-      . sprintf( '%.2u', $min ) . ':'
-      . sprintf( '%.2u', $sec ) . " GMT";
-}
-
 # Emit the string as the body of a response. There should be only one
 # call to _emitBody per request - otheriwse the last call always wins.
 # $string defaults to ''
@@ -2184,7 +2163,7 @@ sub _unlink {
 __END__
 
 Copyright (C) 2008-2015 WikiRing http://wikiring.com
-Copyright (C) 2015-2022 Foswiki Contributors
+Copyright (C) 2015-2025 Foswiki Contributors
 
 This program is licensed to you under the terms of the GNU General
 Public License, version 2. It is distributed in the hope that it will

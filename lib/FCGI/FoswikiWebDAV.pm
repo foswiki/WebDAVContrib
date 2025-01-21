@@ -28,11 +28,10 @@ sub new {
 
     $this->{manager} ||= 'FCGI::FoswikiWebDAVProcManager';
     $this->{nproc}   ||= 1;
-    $this->{maxRequests} //= 100;
     $this->{sock}                 = 0;
     $this->{hupRecieved}          = 0;
     $this->{removeStatusLine}     = $args{removeStatusLine};
-    $this->{maxRequests}          = $args{max};
+    $this->{maxRequests}          = $args{max} // 100;
     $this->{maxSize}              = $args{size};
     $this->{sizecheckNumRequests} = $args{check};
 
@@ -110,7 +109,7 @@ sub run {
         $manager && $manager->pm_pre_dispatch();
 
         # Need handlers, or FCGI pumps these into the void
-        $SIG{__WARN__} = sub { print STDERR "WARN ", @_ };
+        local $SIG{__WARN__} = sub { print STDERR "WARN ", @_ };
 
         #        $SIG{__DIE__}  = sub { print STDERR "DIE ", @_ };
 
@@ -213,7 +212,7 @@ sub fork () {
     }
 
     ### make SIGINT kill us as it did before
-    $SIG{INT} = 'DEFAULT';
+    local $SIG{INT} = 'DEFAULT';
 
     ### put back to normal
     POSIX::sigprocmask( SIG_UNBLOCK, $sigset )
@@ -237,7 +236,7 @@ sub daemonize {
 __END__
 
 Copyright (C) 2013-2015 WikiRing http://wikiring.com
-Copyright (C) 2015-2022 Foswiki Contributors
+Copyright (C) 2015-2025 Foswiki Contributors
 
 This program is licensed to you under the terms of the GNU General
 Public License, version 2. It is distributed in the hope that it will

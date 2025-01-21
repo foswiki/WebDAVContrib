@@ -8,3 +8,4 @@
 /WebDAVContrib_installer.pl
 ./test/litmus-0.13
 **/*.log
+pub/**/igp_*

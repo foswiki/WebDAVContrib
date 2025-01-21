@@ -39,14 +39,14 @@ sub pm_change_process_name {
     my ( $this, $name ) = @_;
 
     $name =~ s/perl/foswiki-dav/g;
-    $0 = $name;
+    $0 = $name;    ## no critic
 }
 
 1;
 
 __END__
 
-Copyright (C) 2013-2022 Foswiki Contributors
+Copyright (C) 2013-2025 Foswiki Contributors
 
 This program is licensed to you under the terms of the GNU General
 Public License, version 2. It is distributed in the hope that it will

@@ -33,7 +33,7 @@ User=www-data
 Group=www-data
 
 # Doesn't seem to support variable substitution. Should be ${FOSWIKI_ROOT}/bin/
-WorkingDirectory=/var/www/foswiki/bin/
+WorkingDirectory=/var/www/foswiki/tools/
 
 # Starts foswiki fcgi service
 ExecStart=/usr/bin/perl ${FOSWIKI_ROOT}/tools/${FOSWIKI_FCGI} \

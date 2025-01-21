@@ -80,7 +80,7 @@ sub createUUID {
 }
 
 # Wrap Apache2::RequestRec in a HTTP::Request/HTTP::Response-compatible shim
-package Apache::FoswikiWebDAV::RequestShim;
+package Apache::FoswikiWebDAV::RequestShim;    ## no critic
 
 sub new {
     my ( $class, $request ) = @_;
@@ -170,7 +170,7 @@ sub auth_failed {
 #    $response->header( 'WWW-Authenticate' => "Basic realm=\"$this->{realm}\"" );
 }
 
-package Apache::FoswikiWebDAV::ResponseShim;
+package Apache::FoswikiWebDAV::ResponseShim;    ## no critic
 
 sub new {
     my ( $class, $request ) = @_;
@@ -196,7 +196,7 @@ sub content {
 __END__
 
 Copyright (C) 2008-2015 WikiRing http://wikiring.com
-Copyright (C) 2015-2022 Foswiki Contributors
+Copyright (C) 2015-2025 Foswiki Contributors
 
 This program is licensed to you under the terms of the GNU General
 Public License, version 2. It is distributed in the hope that it will

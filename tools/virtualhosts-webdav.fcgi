@@ -2,7 +2,7 @@
 # Lightweight WebDAV server using FCGI
 #
 # Copyright (C) 2014-2015 C-Dot Consultants http://c-dot.co.uk
-# Copyright (C) 2015-2020 Foswiki Contributors
+# Copyright (C) 2015-2025 Foswiki Contributors
 # 
 # This program is licensed to you under the terms of the GNU General
 # Public License, version 2. It is distributed in the hope that it will
@@ -64,7 +64,7 @@ my %options = (
     'pidfile|p=s' => \$pidfile,
     'manager|M=s' => \$manager,
     'daemon|d'    => \$detach,
-    'rsl|r'       => \$removeStatusLine,
+    'rsl'         => \$removeStatusLine,
 
     'host|h=s'        => \$host,
     'port=s'          => \$port,
@@ -158,7 +158,7 @@ __DATA__
     -x --max        Maximum requests served per server instance
     -c --check      Number of requests when to check the size of the server
     -s --size       Maximum memory size of a server before being recycled
-    -r --rsl        Remove status line from responses; required by Apache
+    --rsl           Remove status line from responses; required by Apache
     -d --daemon     Detach from terminal and keeps running as a daemon
     -q --quiet      Disable notification messages
     -? --help       Display this help and exits

@@ -1,35 +1,32 @@
-%META:TOPICINFO{author="ProjectContributor" comment="" date="1520435552" format="1.1" version="1"}%
----+!! !WebDAVContrib
-<img src="http://webdav.org/images/webdav-logo.jpg" style="float:right">
+%META:TOPICINFO{author="ProjectContributor" comment="" date="1737449048" format="1.1"  version="1"}%
+---+!! <nop>WebDAVContrib
+<img src="%ATTACHURLPATH%/webdav-logo.jpg" style="float:right">
 %FORMFIELD{"Description"}%
 
 %TOC%
 
-[[http://webdav.org][WebDAV]] stands for "Web-based Distributed Authoring and
-Versioning". It is a set of extensions to the HTTP protocol which allows users
-to collaboratively edit and manage files on remote web servers. 
+[[http://webdav.org][WebDAV]] stands for "Web-based Distributed Authoring and Versioning".
+It is a set of extensions to the HTTP protocol which allows users to collaboratively
+edit and manage files on remote web servers.
 
-This module contains a full Class 2 !WebDAV implementation. It uses a
-standard abstraction of the server filesystem,
-allowing it to be used with a range of different filesystems,
-including (via the FilesysVirtualPlugin) the Foswiki datastore.
+This module contains a full Class 2 <nop>WebDAV implementation. It uses a standard abstraction
+of the server filesystem, allowing it to be used with a range of different filesystems,
+including (via the [[FilesysVirtualPlugin]]) the Foswiki datastore.
 
-The module is designed to work with a number of different web
-servers, and also includes a complete stand-alone server implementation.
+The module is designed to work with a number of different web servers, and also includes
+a complete stand-alone server implementation.
 
-Integration with <nop>Web<nop>DAV means that users can edit topics and
-attachments using an appropriate <nop>Web<nop>DAV enabled client program,
-such as Microsoft Office, Internet Explorer, Open Office, etc. When used
-with the companion WebDAVLinkPlugin, you can embed links to !WebDAV
-resources in Foswiki pages that will open the linked documents in
-native applications.
+Integration with <nop>WebDAV means that users can edit topics and attachments using an
+appropriate <nop>WebDAV enabled client program, such as Microsoft Office, <nop>LibreOffice,
+Open Office, etc. When used with the companion [[https://foswiki.org/Extensions/WebDAVLinkPlugin][WebDAVLinkPlugin]]
+or [[https://foswiki.org/Extensions/NatSkin][NatSkin]], you can embed links to <nop>WebDAV
+resources in Foswiki pages that will open the linked documents in native applications.
 
-!Foswiki permissions are honoured throughout.
+Foswiki permissions are honoured throughout.
 
-Use of the FilesysVirtualPlugin means that all the data views supported by
-that module are available to !WebDAV clients, so clients can read and write
-Foswiki topics as text, as HTML, as a JSON data structure, or as any other
-view supported by FilesysVirtualPlugin.
+Use of the [[FilesysVirtualPlugin]] means that all the data views supported by that
+module are available to <nop>WebDAV clients, so clients can read and write Foswiki topics
+as text, as HTML, as a JSON data structure, or as any other view supported by <nop>FilesysVirtualPlugin.
 
 ---++ Installation Instructions
 
@@ -41,60 +38,59 @@ view supported by FilesysVirtualPlugin.
 
 ---++ Debugging
 
-If you encounter problems with clients it can be useful to be able to trace the
-activity of the server. All the web servers have some mechanism to pass a
-debugging option in. This tracing option is in the form of a bit mask, where the
-bits mean:
+If you encounter problems with clients it can be useful to be able to trace the activity
+of the server. All the web servers have some mechanism to pass a debugging option
+in. This tracing option is in the form of a bit mask, where the bits mean:
+
    * 1 to enable error tracing (shows reason for failures)
-   * 2 to enable tracing of !WebDAV requests.
+   * 2 to enable tracing of <nop>WebDAV requests.
    * 4 to enable detailed debugging
    * 8 to enable memory usage information
    * 16 to enable very detailed filesystem level tracing
-The bits can be combined e.g.
-=17= will enable detailed filesystem tracing and error reporting. Trace
-information is output to the web server error log.
 
-If you have experience, then another tool that can be very useful in
-debugging is a network protocol analyser, such as
-[[http://www.wireshark.org][wireshark]].
+The bits can be combined e.g. =17= will enable detailed filesystem tracing and error
+reporting. Trace information is output to theweb server error log.
 
----+++ Configuring !FilesysVirtualPlugin
+If you have experience, then another tool that can be very useful in debugging is
+a network protocol analyser, such as [[http://www.wireshark.org][wireshark]].
 
-Refer to the documentation for FilesysVirtualPlugin for information on
-configuring it to support different data views. Each data view presents
-topics as a different file type, allowing you to read and write the same
-topic in a range of different formats.
+---++ Configuring <nop>FilesysVirtualPlugin
+
+Refer to the documentation for [[FilesysVirtualPlugin]] for information on configuring
+it to support different data views. Each data view presents topics as a different
+file type, allowing you to read and write the same topic in a range of different
+formats.
 
 ---++ Clients
 
-There are many DAV clients out there that it would be impossible to describe
-them all.
+There are many DAV clients out there that it would be impossible to describe them
+all.
 
 ---+++ Linking to DAV resources from a web browser
 
 To link to a DAV resource from a web browser, all you have to do is link to
 the DAV url of the resource. However most browsers will open the link
 in a "read only" mode. If you want to open DAV resources from Firefox
-or Internet Explorer for editing using a DAV-aware native application
-(such as Microsoft Word or Open Office) you can use the companion
-WebDAVLinkPlugin.
+or Chrome for editing using a DAV-aware native application
+(such as Microsoft Word, <nop>LibreOffice or Open Office) you can use the companion
+[[https://foswiki.org/Extensions/WebDAVLinkPlugin][WebDAVLinkPlugin]]. Note that this plugin is not required when using [[https://foswiki.org/Extensions/NatSkin][NatSkin]] and
+[[https://foswiki.org/Extensions/TopicInteractionPlugin][TopicInteractionPlugin]].
 
 ---+++ Accessing <nop>WebDAV resources on Microsoft Windows
 
-There are so many problems with the Microsoft implementation of !WebDAV
-that unfortunately it merits a topic of it's own: WebDAVAndWindowsClient
+For more information on how to access <nop>WebDAV resources under MS Windows see [[WebDAVAndWindowsClient]].
 
----+++ Libreoffice
+---+++ <nop>LibreOffice
 
-The otherwise excellent !LibreOffice suite has implemented locking since version
-4.1. Unfortunately their lock implementation is not consistent with the !WebDAV spec, and
-we have had to disable lock support for !LibreOffice. The only risk this poses is if
-two people try to edit the same attachment via !WebDAV simultaneously.
+The otherwise excellent <nop>LibreOffice suite has implemented locking since version
+4.1. Unfortunately their lock implementation is not consistent with the <nop>WebDAV spec, and
+we have had to disable lock support for <nop>LibreOffice. The only risk this poses is if
+two people try to edit the same attachment via <nop>WebDAV simultaneously.
 
----+++ Server Validation
+---++ Server Validation
 
 All the standard [[http://www.webdav.org/neon/litmus/][Litmus tests]] for
-a class 2 !WebDAV server pass. WebDAVContribLitmusTests describes how to
+a class 2 <nop>WebDAV server pass. WebDAVContribLitmusTests describes how to
 run them.
 
 ---++ License
@@ -104,16 +100,23 @@ This software is released under the GNU Public License, version 2.
 ---++ Info
 
 Many thanks to the following sponsors for supporting this work:
+
    * [[http://Kontextwork.de][KontextWork]]
    * [[http://www.fu-berlin.de/][Freie Universit&auml;t Berlin]]
-
 
 ---++ Change History
 
 %TABLE{columnwidths="7em" tablewidth="100%"}%
+|  21 Jan 2025: | Foswikitask:Item15419 - docu quite outdated; \
+                  webdav-logo.jpg missing in distribution; \
+                  cannot disable maxRequests in webdav client; \
+                  adding support for displayName in DAV, even though most clients don't support it; \
+                  last modification time format must be in ISO format, not in a custom "HTML" format; \
+                  UTF8 encoding error of REMOTE_USER; \
+                  duplicate cmdline parameter =-r= in =virtualhosts-webdav.fcgi= |
 |  06 May 2022: | Foswikitask:Item15127 - fix processing commandline options; \
                   fix all unit tests; remove outdated litmus tests from checkin; \
-                  fix systemd startup service; implement a WebDAVAuth class to cover additional authentication methods in addition to basic auth, such as kerberos; \
+                  fix systemd startup service; implement a <nop>WebDAVAuth class to cover additional authentication methods in addition to basic auth, such as kerberos; \
                   add support for warmup as in newer FastCGIEngineContrib |
 |  20 Oct 2020: | Foswikitask:Item14476 - fix init scripts; add systemd service; \
                   Foswikitask:Item14961 - respect ={FastCGIContrib}{CheckLocalSiteCfg}= setting; adjusting a couple of problems reported by perlcritique; \
@@ -123,15 +126,15 @@ Many thanks to the following sponsors for supporting this work:
 |  08 Mar 2016: | Foswikitask:Item14018 - fixed Can't locate object method "LastCall" via package "HTTP::Headers" (Foswiki:Main.FlorianSchlichting); \
                   Foswikitask:Item13799 - fails to connect network drive on Windows 7 (Foswiki:Main.FlorianSchlichting) |
 
-<!-- Do _not_ attempt to edit this topic; it is auto-generated. Please add comments/questions/remarks to the feedback topic on foswiki.org instead. -->
 
 %META:FORM{name="PackageForm"}%
-%META:FIELD{name="Author" title="Author" value="Crawford Currie http://c-dot.co.uk"}%
+%META:FIELD{name="Author" title="Author" value="Crawford Currie"}%
 %META:FIELD{name="Version" title="Version" value="%25$VERSION%25"}%
 %META:FIELD{name="Release" title="Release" value="%25$RELEASE%25"}%
 %META:FIELD{name="Description" title="Description" value="%25$SHORTDESCRIPTION%25"}%
 %META:FIELD{name="Repository" title="Repository" value="https://github.com/foswiki/WebDAVContrib"}%
-%META:FIELD{name="Copyright" title="Copyright" value="&copy; 2008 !KontextWork.de, &copy; 2008-2015 Crawford Currie http://c-dot.co.uk; 2015-2022 Foswiki Contributors"}%
+%META:FIELD{name="Copyright" title="Copyright" value="&copy; 2008 !KontextWork.de, &copy; 2008-2015 Crawford Currie http://c-dot.co.uk; 2015-2025 Foswiki Contributors"}%
 %META:FIELD{name="License" title="License" value="[[http://www.gnu.org/licenses/old-licenses/gpl-2.0.html][GPL2 (Gnu General Public License v2)]]"}%
 %META:FIELD{name="Home" title="Home" value="https://foswiki.org/Extensions/WebDAVContrib"}%
 %META:FIELD{name="Support" title="Support" value="https://foswiki.org/Support/WebDAVContrib"}%
+%META:FILEATTACHMENT{name="webdav-logo.jpg" attachment="webdav-logo.jpg" attr="" comment="" date="1737449048" size="4001" user="ProjectContributor" version="1"}%
